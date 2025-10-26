@@ -61,7 +61,9 @@
 
     "forwardPorts": [
         8000,
-        "caddy:8443"
+        5173,
+        "caddy:8443",
+        "db_admin:5433"
     ],
     "portsAttributes": {
         "8000": {
@@ -69,10 +71,20 @@
             "onAutoForward": "silent",
             "protocol": "http"
         },
+        "5173": {
+            "label": "Vite",
+            "onAutoForward": "silent",
+            "protocol": "http"
+        },
         "caddy:8443": {
             "label": "Secure Backend",
             "onAutoForward": "silent",
             "protocol": "https"
+        },
+        "db_admin:5433": {
+            "label": "pgadmin",
+            "onAutoForward": "silent",
+            "protocol": "http"
         }
     },
 
