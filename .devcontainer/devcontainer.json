@@ -50,7 +50,8 @@
                 "xdebug.php-debug",
                 "YoavBls.pretty-ts-errors",
                 "qwtel.sqlite-viewer",
-                "vivaxy.vscode-conventional-commits"
+                "vivaxy.vscode-conventional-commits",
+                "Vue.volar"
             ],
             "settings": {
                 "phpactor.executablePath": "/usr/local/bin/php",
