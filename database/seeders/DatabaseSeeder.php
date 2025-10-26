@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Place;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
+use function Laravel\Prompts\confirm;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +23,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => '123',
         ]);
+
+        Place::factory()
+            ->hasWarehouses(2)
+            ->create();
+    }
+
+    private function ask(string $class, array $parameters = []): void
+    {
+        $name = str($class)->afterLast('\\');
+
+        if (app()->runningUnitTests() || confirm("Run {$name} ?", true)) {
+            $this->call($class, parameters: $parameters);
+        }
     }
 }
