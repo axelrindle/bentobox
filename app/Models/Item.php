@@ -50,4 +50,9 @@ class Item extends Model
     {
         return $this->belongsTo(Item::class, 'parent_id');
     }
+
+    public function children()
+    {
+        return $this->hasMany(Item::class, 'parent_id');
+    }
 }
