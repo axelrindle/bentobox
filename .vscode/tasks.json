@@ -20,6 +20,24 @@
             }
         },
         {
+            "label": "Frontend",
+            "command": "bun --bun run dev",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": "none",
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
             "label": "Scheduler",
             "detail": "Boots the Laravel scheduler worker",
             "type": "shell",
@@ -61,6 +79,7 @@
             "problemMatcher": [],
             "dependsOn": [
                 "Laravel",
+                "Frontend",
                 "Scheduler",
                 "Queue"
             ]
