@@ -20,6 +20,24 @@
             }
         },
         {
+            "label": "SSR",
+            "command": "php artisan inertia:start-ssr --runtime bun",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": "none",
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
             "label": "Frontend",
             "command": "bun --bun run dev",
             "type": "shell",
@@ -79,6 +97,7 @@
             "problemMatcher": [],
             "dependsOn": [
                 "Laravel",
+                "SSR",
                 "Frontend",
                 "Scheduler",
                 "Queue"

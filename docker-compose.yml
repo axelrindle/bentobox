@@ -1,5 +1,54 @@
-name: php-devcontainer
+name: bentobox
 
 services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      - POSTGRES_DB=bentobox
+      - POSTGRES_USER=bentobox
+      - POSTGRES_PASSWORD=bentobox
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  db_admin:
+    image: dpage/pgadmin4:9
+    depends_on:
+      - db
+    environment:
+      - PGADMIN_LISTEN_PORT=5433
+      - PGADMIN_DEFAULT_EMAIL=admin@example.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    configs:
+      - source: db_password
+        target: /run/secrets/password.txt
+      - source: servers.json
+        target: /pgadmin4/servers.json
+    volumes:
+      - db_admin_data:/var/lib/pgadmin
+
   redis:
     image: redis:8-alpine
+
+volumes:
+  db_data:
+  db_admin_data:
+
+configs:
+  servers.json:
+    content: |
+      {
+        "Servers": {
+          "1": {
+            "Group": "bentobox",
+            "Name": "bentobox",
+            "Port": 5432,
+            "Username": "bentobox",
+            "PassFile": "/run/secrets/password.txt",
+            "Host": "db",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+          }
+        }
+      }
+  db_password:
+    content: bentobox

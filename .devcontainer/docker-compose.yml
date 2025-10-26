@@ -1,4 +1,4 @@
-name: php-devcontainer
+name: bentobox
 
 services:
   devcontainer:
