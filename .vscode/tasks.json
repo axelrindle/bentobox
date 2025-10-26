@@ -1,0 +1,107 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Laravel",
+            "command": "php artisan serve --host=0.0.0.0",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": "none",
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "Scheduler",
+            "detail": "Boots the Laravel scheduler worker",
+            "type": "shell",
+            "command": "php artisan schedule:work",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": "none",
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "Queue",
+            "detail": "Boots the Laravel Queue worker",
+            "type": "shell",
+            "command": "php artisan queue:work",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": "none",
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "Dev",
+            "detail": "Boots all components of the application",
+            "problemMatcher": [],
+            "dependsOn": [
+                "Laravel",
+                "Scheduler",
+                "Queue"
+            ]
+        },
+
+        {
+            "label": "Migrate",
+            "detail": "Run database migrations",
+            "type": "shell",
+            "command": "./artisan migrate",
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+            },
+        },
+        {
+            "label": "Reset database",
+            "detail": "Reset and seed the database",
+            "type": "shell",
+            "command": "./artisan migrate:fresh --seed",
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "focus": true,
+            },
+        },
+        {
+            "label": "Clear Cache",
+            "detail": "Clear cached data",
+            "type": "shell",
+            "command": "./artisan optimize:clear",
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared",
+            },
+        },
+    ]
+}

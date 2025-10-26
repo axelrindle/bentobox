@@ -1,0 +1,67 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Laravel Debug",
+            "type": "php",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "XDEBUG_MODE": "develop,debug",
+                "XDEBUG_SESSION": "1",
+            },
+            "program": "${workspaceFolder}/artisan",
+            "args": [
+                "serve",
+                "--host",
+                "0.0.0.0"
+            ]
+        },
+        {
+            "name": "Artisan Debug",
+            "type": "php",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "XDEBUG_MODE": "develop,debug",
+                "XDEBUG_SESSION": "1",
+            },
+            "program": "${workspaceFolder}/artisan",
+            "args": [
+                "lang:translate",
+                "--ignore-existing",
+                "--vendor=profile-filament",
+                "--",
+                "de"
+            ]
+        },
+        {
+            "name": "Test Debug",
+            "type": "php",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "XDEBUG_MODE": "develop,debug",
+                "XDEBUG_SESSION": "1",
+            },
+            "program": "${workspaceFolder}/artisan",
+            "args": [
+                "test"
+            ]
+        },
+        {
+            "name": "Debug open file",
+            "type": "php",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "XDEBUG_MODE": "develop,debug",
+                "XDEBUG_SESSION": "1",
+            },
+            "program": "${file}",
+        }
+    ]
+}

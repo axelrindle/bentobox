@@ -1,0 +1,10 @@
+{
+    "explorer.autoRevealExclude": {
+        "**/node_modules": true,
+        "**/vendor": true
+    },
+
+    "i18n-ally.localesPaths": [
+        "lang"
+    ],
+}
