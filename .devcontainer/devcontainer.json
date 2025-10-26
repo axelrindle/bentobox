@@ -93,6 +93,6 @@
         "zsh-comp-gh": "gh completion -s zsh | tee ${HOME}/.zsh/completions/gh.zsh > /dev/null",
         "zsh-comp-kubectl": "kubectl completion zsh | tee ${HOME}/.zsh/completions/kubectl.zsh > /dev/null",
         "zsh-comp-helm": "helm completion zsh | tee ${HOME}/.zsh/completions/helm.zsh > /dev/null",
+        "zsh-comp-artisan": "php artisan completion zsh | tee ${HOME}/.zsh/completions/artisan.zsh > /dev/null"
     }
-    // "postStartCommand": "moon run :install"
 }
