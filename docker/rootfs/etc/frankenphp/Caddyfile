@@ -1,0 +1,20 @@
+{
+	skip_install_trust
+
+	frankenphp
+}
+
+:1337 {
+	root public/
+
+	encode zstd br gzip
+	log {
+		output stderr
+		format console
+		no_hostname
+	}
+
+	php_server {
+		try_files {path} index.php
+	}
+}
