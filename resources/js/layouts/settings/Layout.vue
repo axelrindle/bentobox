@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import Heading from '@/components/Heading.vue';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { toUrl, urlIsActive } from '@/lib/utils';
-import { edit as editAppearance } from '@/routes/appearance';
-import { edit as editProfile } from '@/routes/profile';
-import { show } from '@/routes/two-factor';
-import { edit as editPassword } from '@/routes/user-password';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3'
+import Heading from '@/components/Heading.vue'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { toUrl, urlIsActive } from '@/lib/utils'
+import { edit as editAppearance } from '@/routes/appearance'
+import { edit as editProfile } from '@/routes/profile'
+import { show } from '@/routes/two-factor'
+import { edit as editPassword } from '@/routes/user-password'
+import { type NavItem } from '@/types'
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -27,9 +27,9 @@ const sidebarNavItems: NavItem[] = [
         title: 'Appearance',
         href: editAppearance(),
     },
-];
+]
 
-const currentPath = typeof window !== undefined ? window.location.pathname : '';
+const currentPath = typeof window !== undefined ? window.location.pathname : ''
 </script>
 
 <template>
@@ -53,7 +53,10 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
                         as-child
                     >
                         <Link :href="item.href">
-                            <component :is="item.icon" class="h-4 w-4" />
+                            <component
+                                :is="item.icon"
+                                class="h-4 w-4"
+                            />
                             {{ item.title }}
                         </Link>
                     </Button>

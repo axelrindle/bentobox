@@ -7,11 +7,11 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
+} from '@/components/ui/select'
 
 const model = defineModel({
     type: [String, Number, Object],
-});
+})
 
 interface SelectProps {
     options?: any;
@@ -19,7 +19,7 @@ interface SelectProps {
 
 withDefaults(defineProps<SelectProps>(), {
     options: [],
-});
+})
 </script>
 
 <template>

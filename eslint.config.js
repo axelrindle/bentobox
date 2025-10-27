@@ -1,19 +1,38 @@
-import prettier from 'eslint-config-prettier/flat';
-import vue from 'eslint-plugin-vue';
+import configActDefault from '@actcoding/eslint-config/default'
+import configVue from 'eslint-plugin-vue'
 
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
-
-export default defineConfigWithVueTs(
-    vue.configs['flat/essential'],
-    vueTsConfigs.recommended,
+/** @type {import('eslint').Linter.Config[]} */
+export default [
     {
+        name: 'app/files',
+        files: [
+            'resources/js/**/*',
+        ],
+    },
+    {
+        name: 'app/ignores',
         ignores: ['vendor', 'node_modules', 'public', 'bootstrap/ssr', 'tailwind.config.js', 'resources/js/components/ui/*'],
     },
+    ...configActDefault,
+    ...configVue.configs['flat/recommended'],
     {
-        rules: {
-            'vue/multi-word-component-names': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
+        name: 'app/vue/ts',
+        files: ['resources/js/**/*.vue'],
+        languageOptions: {
+            parserOptions: {
+                parser: '@typescript-eslint/parser',
+            },
         },
     },
-    prettier,
-);
+    {
+        name: 'app/rules',
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'off',
+
+            'vue/multi-word-component-names': 'off',
+            'vue/html-indent': ['error', 4],
+            'vue/require-default-prop ': 'off',
+        },
+    },
+]
+

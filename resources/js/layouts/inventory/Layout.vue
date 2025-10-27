@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import Heading from '@/components/Heading.vue';
-import Select from '@/components/Select.vue';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { toUrl, urlIsActive } from '@/lib/utils';
-import { show } from '@/routes/warehouses';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { CogIcon, MapPinnedIcon } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3'
+import { CogIcon, MapPinnedIcon } from 'lucide-vue-next'
+import { ref } from 'vue'
+import Heading from '@/components/Heading.vue'
+import Select from '@/components/Select.vue'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { toUrl, urlIsActive } from '@/lib/utils'
+import { show } from '@/routes/warehouses'
+import { type NavItem } from '@/types'
 
-const selectedPlace = ref<any>(null);
+const selectedPlace = ref<any>(null)
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -21,14 +21,13 @@ const sidebarNavItems: NavItem[] = [
         title: 'All Items',
         href: '#',
     },
-];
+]
 
-const currentPath = typeof window !== undefined ? window.location.pathname : '';
+const currentPath = typeof window !== undefined ? window.location.pathname : ''
 </script>
 
 <template>
     <div class="p-4 space-y-4">
-
         <div class="border border-sidebar-border/70 w-full rounded-xl flex items-center justify-between p-2">
             <Select
                 v-model="selectedPlace"
@@ -38,11 +37,18 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
                 ]"
             />
             <div class="flex items-center space-x-2">
-                <Button :disabled="!selectedPlace" variant="outline">
+                <Button
+                    :disabled="!selectedPlace"
+                    variant="outline"
+                >
                     <MapPinnedIcon />
                     <span>Show on Map</span>
                 </Button>
-                <Button :disabled="!selectedPlace" disabled variant="outline" size="icon">
+                <Button
+                    :disabled="!selectedPlace"
+                    variant="outline"
+                    size="icon"
+                >
                     <CogIcon />
                 </Button>
             </div>
@@ -62,7 +68,10 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
                         as-child
                     >
                         <Link :href="item.href">
-                            <component :is="item.icon" class="h-4 w-4" />
+                            <component
+                                :is="item.icon"
+                                class="h-4 w-4"
+                            />
                             {{ item.title }}
                         </Link>
                     </Button>

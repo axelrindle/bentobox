@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Settings\WarehouseController;
 use Illuminate\Support\Facades\Route;
 

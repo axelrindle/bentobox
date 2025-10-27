@@ -1,5 +1,5 @@
-import { InertiaLinkProps } from '@inertiajs/vue3';
-import type { LucideIcon } from 'lucide-vue-next';
+import { InertiaLinkProps } from '@inertiajs/vue3'
+import type { LucideIcon } from 'lucide-vue-next'
 
 export interface Auth {
     user: User;
@@ -24,7 +24,7 @@ export type AppPageProps<
     quote: { message: string; author: string };
     auth: Auth;
     sidebarOpen: boolean;
-};
+}
 
 export interface User {
     id: number;
@@ -36,4 +36,4 @@ export interface User {
     updated_at: string;
 }
 
-export type BreadcrumbItemType = BreadcrumbItem;
+export type BreadcrumbItemType = BreadcrumbItem

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import HeadingSmall from '@/components/HeadingSmall.vue';
-import TwoFactorRecoveryCodes from '@/components/TwoFactorRecoveryCodes.vue';
-import TwoFactorSetupModal from '@/components/TwoFactorSetupModal.vue';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
-import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { disable, enable, show } from '@/routes/two-factor';
-import { BreadcrumbItem } from '@/types';
-import { Form, Head } from '@inertiajs/vue3';
-import { ShieldBan, ShieldCheck } from 'lucide-vue-next';
-import { onUnmounted, ref } from 'vue';
+import { Form, Head } from '@inertiajs/vue3'
+import { ShieldBan, ShieldCheck } from 'lucide-vue-next'
+import { onUnmounted, ref } from 'vue'
+import HeadingSmall from '@/components/HeadingSmall.vue'
+import TwoFactorRecoveryCodes from '@/components/TwoFactorRecoveryCodes.vue'
+import TwoFactorSetupModal from '@/components/TwoFactorSetupModal.vue'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth'
+import AppLayout from '@/layouts/AppLayout.vue'
+import SettingsLayout from '@/layouts/settings/Layout.vue'
+import { disable, enable, show } from '@/routes/two-factor'
+import { BreadcrumbItem } from '@/types'
 
 interface Props {
     requiresConfirmation?: boolean;
@@ -21,21 +21,21 @@ interface Props {
 withDefaults(defineProps<Props>(), {
     requiresConfirmation: false,
     twoFactorEnabled: false,
-});
+})
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Two-Factor Authentication',
         href: show.url(),
     },
-];
+]
 
-const { hasSetupData, clearTwoFactorAuthData } = useTwoFactorAuth();
-const showSetupModal = ref<boolean>(false);
+const { hasSetupData, clearTwoFactorAuthData } = useTwoFactorAuth()
+const showSetupModal = ref<boolean>(false)
 
 onUnmounted(() => {
-    clearTwoFactorAuthData();
-});
+    clearTwoFactorAuthData()
+})
 </script>
 
 <template>
@@ -52,7 +52,9 @@ onUnmounted(() => {
                     v-if="!twoFactorEnabled"
                     class="flex flex-col items-start justify-start space-y-4"
                 >
-                    <Badge variant="destructive">Disabled</Badge>
+                    <Badge variant="destructive">
+                        Disabled
+                    </Badge>
 
                     <p class="text-muted-foreground">
                         When you enable two-factor authentication, you will be
@@ -70,14 +72,17 @@ onUnmounted(() => {
                         </Button>
                         <Form
                             v-else
+                            v-slot="{ processing }"
                             v-bind="enable.form()"
                             @success="showSetupModal = true"
-                            #default="{ processing }"
                         >
-                            <Button type="submit" :disabled="processing">
-                                <ShieldCheck />Enable 2FA</Button
-                            ></Form
-                        >
+                            <Button
+                                type="submit"
+                                :disabled="processing"
+                            >
+                                <ShieldCheck />Enable 2FA
+                            </Button>
+                        </Form>
                     </div>
                 </div>
 
@@ -85,7 +90,9 @@ onUnmounted(() => {
                     v-else
                     class="flex flex-col items-start justify-start space-y-4"
                 >
-                    <Badge variant="default">Enabled</Badge>
+                    <Badge variant="default">
+                        Enabled
+                    </Badge>
 
                     <p class="text-muted-foreground">
                         With two-factor authentication enabled, you will be
@@ -97,7 +104,10 @@ onUnmounted(() => {
                     <TwoFactorRecoveryCodes />
 
                     <div class="relative inline">
-                        <Form v-bind="disable.form()" #default="{ processing }">
+                        <Form
+                            v-slot="{ processing }"
+                            v-bind="disable.form()"
+                        >
                             <Button
                                 variant="destructive"
                                 type="submit"
@@ -111,9 +121,9 @@ onUnmounted(() => {
                 </div>
 
                 <TwoFactorSetupModal
-                    v-model:isOpen="showSetupModal"
-                    :requiresConfirmation="requiresConfirmation"
-                    :twoFactorEnabled="twoFactorEnabled"
+                    v-model:is-open="showSetupModal"
+                    :requires-confirmation="requiresConfirmation"
+                    :two-factor-enabled="twoFactorEnabled"
                 />
             </div>
         </SettingsLayout>

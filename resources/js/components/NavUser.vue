@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import UserInfo from '@/components/UserInfo.vue';
+import { usePage } from '@inertiajs/vue3'
+import { ChevronsUpDown } from 'lucide-vue-next'
+import UserMenuContent from './UserMenuContent.vue'
+import UserInfo from '@/components/UserInfo.vue'
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu'
 import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
     useSidebar,
-} from '@/components/ui/sidebar';
-import { usePage } from '@inertiajs/vue3';
-import { ChevronsUpDown } from 'lucide-vue-next';
-import UserMenuContent from './UserMenuContent.vue';
+} from '@/components/ui/sidebar'
 
-const page = usePage();
-const user = page.props.auth.user;
-const { isMobile, state } = useSidebar();
+const page = usePage()
+const user = page.props.auth.user
+const { isMobile, state } = useSidebar()
 </script>
 
 <template>
@@ -40,8 +40,8 @@ const { isMobile, state } = useSidebar();
                         isMobile
                             ? 'bottom'
                             : state === 'collapsed'
-                              ? 'left'
-                              : 'bottom'
+                                ? 'left'
+                                : 'bottom'
                     "
                     align="end"
                     :side-offset="4"

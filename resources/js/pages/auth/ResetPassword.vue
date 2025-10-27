@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import InputError from '@/components/InputError.vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/AuthLayout.vue';
-import { update } from '@/routes/password';
-import { Form, Head } from '@inertiajs/vue3';
-import { LoaderCircle } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { Form, Head } from '@inertiajs/vue3'
+import { LoaderCircle } from 'lucide-vue-next'
+import { ref } from 'vue'
+import InputError from '@/components/InputError.vue'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import AuthLayout from '@/layouts/AuthLayout.vue'
+import { update } from '@/routes/password'
 
 const props = defineProps<{
     token: string;
     email: string;
-}>();
+}>()
 
-const inputEmail = ref(props.email);
+const inputEmail = ref(props.email)
 </script>
 
 <template>
@@ -25,24 +25,27 @@ const inputEmail = ref(props.email);
         <Head title="Reset password" />
 
         <Form
+            v-slot="{ errors, processing }"
             v-bind="update.form()"
             :transform="(data) => ({ ...data, token, email })"
             :reset-on-success="['password', 'password_confirmation']"
-            v-slot="{ errors, processing }"
         >
             <div class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
                     <Input
                         id="email"
+                        v-model="inputEmail"
                         type="email"
                         name="email"
                         autocomplete="email"
-                        v-model="inputEmail"
                         class="mt-1 block w-full"
                         readonly
                     />
-                    <InputError :message="errors.email" class="mt-2" />
+                    <InputError
+                        :message="errors.email"
+                        class="mt-2"
+                    />
                 </div>
 
                 <div class="grid gap-2">

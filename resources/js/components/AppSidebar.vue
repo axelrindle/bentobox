@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import NavFooter from '@/components/NavFooter.vue';
-import NavMain from '@/components/NavMain.vue';
-import NavUser from '@/components/NavUser.vue';
+import { Link } from '@inertiajs/vue3'
+import { BookOpen, Folder, LayoutGrid, Boxes } from 'lucide-vue-next'
+import AppLogo from './AppLogo.vue'
+import NavFooter from '@/components/NavFooter.vue'
+import NavMain from '@/components/NavMain.vue'
+import NavUser from '@/components/NavUser.vue'
 import {
     Sidebar,
     SidebarContent,
@@ -10,13 +13,10 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
-import { show } from '@/routes/warehouses';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Boxes } from 'lucide-vue-next';
-import AppLogo from './AppLogo.vue';
+} from '@/components/ui/sidebar'
+import { dashboard } from '@/routes'
+import { show } from '@/routes/warehouses'
+import { type NavItem } from '@/types'
 
 const mainNavItems: NavItem[] = [
     {
@@ -29,7 +29,7 @@ const mainNavItems: NavItem[] = [
         href: show(),
         icon: Boxes,
     },
-];
+]
 
 const footerNavItems: NavItem[] = [
     {
@@ -42,15 +42,21 @@ const footerNavItems: NavItem[] = [
         href: 'https://laravel.com/docs/starter-kits#vue',
         icon: BookOpen,
     },
-];
+]
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar
+        collapsible="icon"
+        variant="inset"
+    >
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" as-child>
+                    <SidebarMenuButton
+                        size="lg"
+                        as-child
+                    >
                         <Link :href="dashboard()">
                             <AppLogo />
                         </Link>

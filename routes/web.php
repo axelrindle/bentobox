@@ -16,4 +16,3 @@ Route::get('dashboard', function () {
 
 require __DIR__.'/settings.php';
 require __DIR__.'/inventory.php';
-

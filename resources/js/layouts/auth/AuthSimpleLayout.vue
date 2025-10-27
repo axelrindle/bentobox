@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import { home } from '@/routes';
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3'
+import AppLogoIcon from '@/components/AppLogoIcon.vue'
+import { home } from '@/routes'
 
 defineProps<{
     title?: string;
     description?: string;
-}>();
+}>()
 </script>
 
 <template>
@@ -30,7 +30,9 @@ defineProps<{
                         <span class="sr-only">{{ title }}</span>
                     </Link>
                     <div class="space-y-2 text-center">
-                        <h1 class="text-xl font-medium">{{ title }}</h1>
+                        <h1 class="text-xl font-medium">
+                            {{ title }}
+                        </h1>
                         <p class="text-center text-sm text-muted-foreground">
                             {{ description }}
                         </p>

@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import InputError from '@/components/InputError.vue';
-import TextLink from '@/components/TextLink.vue';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthBase from '@/layouts/AuthLayout.vue';
-import { register } from '@/routes';
-import { store } from '@/routes/login';
-import { request } from '@/routes/password';
-import { Form, Head } from '@inertiajs/vue3';
-import { LoaderCircle } from 'lucide-vue-next';
+import { Form, Head } from '@inertiajs/vue3'
+import { LoaderCircle } from 'lucide-vue-next'
+import InputError from '@/components/InputError.vue'
+import TextLink from '@/components/TextLink.vue'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import AuthBase from '@/layouts/AuthLayout.vue'
+import { register } from '@/routes'
+import { store } from '@/routes/login'
+import { request } from '@/routes/password'
 
 defineProps<{
     status?: string;
     canResetPassword: boolean;
     canRegister: boolean;
-}>();
+}>()
 </script>
 
 <template>
@@ -34,9 +34,9 @@ defineProps<{
         </div>
 
         <Form
+            v-slot="{ errors, processing }"
             v-bind="store.form()"
             :reset-on-success="['password']"
-            v-slot="{ errors, processing }"
             class="flex flex-col gap-6"
         >
             <div class="grid gap-6">
@@ -80,8 +80,15 @@ defineProps<{
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox id="remember" name="remember" :tabindex="3" />
+                    <Label
+                        for="remember"
+                        class="flex items-center space-x-3"
+                    >
+                        <Checkbox
+                            id="remember"
+                            name="remember"
+                            :tabindex="3"
+                        />
                         <span>Remember me</span>
                     </Label>
                 </div>
@@ -102,11 +109,16 @@ defineProps<{
             </div>
 
             <div
-                class="text-center text-sm text-muted-foreground"
                 v-if="canRegister"
+                class="text-center text-sm text-muted-foreground"
             >
                 Don't have an account?
-                <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
+                <TextLink
+                    :href="register()"
+                    :tabindex="5"
+                >
+                    Sign up
+                </TextLink>
             </div>
         </Form>
     </AuthBase>
