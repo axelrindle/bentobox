@@ -53,7 +53,7 @@
         ],
         "test": [
             "@php artisan config:clear --ansi",
-            "@php artisan test --ci"
+            "@php artisan test --ci --bail"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
