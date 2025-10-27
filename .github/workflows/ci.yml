@@ -21,68 +21,67 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  test-backend:
-    name: Run Laravel tests
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
 
-      - name: Setup PHP
+      - name: Setup Php
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
           coverage: xdebug
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Cache (Bun)
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('bun.lock') }}
+
+      - name: Install dependencies (Bun)
+        run: bun install --frozen-lockfile
 
       - name: Install Composer
         run: |
           wget https://github.com/composer/composer/releases/latest/download/composer.phar -O ./composer
           chmod +x ./composer
 
-      - uses: actions/cache@v4
+      - name: Cache (Php)
+        uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-${{ hashFiles('composer.lock') }}
 
-      - name: Install dependencies
+      - name: Install dependencies (Php)
         run: ./composer install
 
       - name: Generate key
         run: |
           cp .env.testing .env
-          ./artisan key:generate
+          echo APP_KEY=\"$(./artisan key:generate --show)\" | tee -a .env > /dev/null
+          ./artisan config:cache
 
-      - name: Check code style
+      - name: Check code style (Php)
         run: ./composer run-script lint
 
-      - name: Run tests
+      - name: Check code style (Bun)
+        run: bun --bun run lint
+
+      - name: Build
+        run: bun --bun run build:ssr
+
+      - name: Run tests (Php)
         run: ./composer run-script test
 
-  test-frontend:
-    name: Run Frontend tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup PHP
-        uses: oven-sh/setup-bun@v2
-
-      - uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ hashFiles('bun.lock') }}
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Check code style
-        run: bun run lint
-
-  build-docker-image:
+  docker-image:
     name: Build Docker image
     runs-on: ubuntu-latest
     needs:
-      - test-backend
-      - test-frontend
+      - test
     permissions:
       contents: read
       packages: write
