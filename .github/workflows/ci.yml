@@ -48,7 +48,7 @@ jobs:
 
       - name: Generate key
         run: |
-          touch .env
+          cp .env.testing .env
           ./artisan key:generate
 
       - name: Check code style
