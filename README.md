@@ -1,13 +1,7 @@
-# php-devcontainer-template
+# BentoBox
 
-> Ready-to-use devcontainer repository template for working with Php projects
+> Open Source Inventory Management 
 
-Based on our own Php devcontainer image, which lives in [actcoding/php-devcontainer](https://github.com/actcoding/php-devcontainer)
+## License
 
-## Contents
-
-### Language Server
-
-[phpactor/phpactor](https://github.com/phpactor/phpactor)
-
-The binary lives at `/opt/phpactor/bin/phpactor`
+[GPL-3.0](LICENSE)
