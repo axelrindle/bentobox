@@ -118,6 +118,8 @@ jobs:
         uses: docker/build-push-action@v6
         id: push
         with:
+          context: .
+          file: docker/Dockerfile
           tags: ${{ env.REGISTRY }}/${{ github.repository }}
           labels: ${{ steps.meta.outputs.labels }}
           push: ${{ github.event_name != 'pull_request' }}
