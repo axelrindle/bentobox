@@ -1,4 +1,7 @@
-FROM dunglas/frankenphp:php8.4-alpine AS build
+ARG PHP_VERSION=8.4
+
+# Install dependencies and compile sources
+FROM dunglas/frankenphp:php${PHP_VERSION}-alpine AS build
 
 RUN apk add --no-cache \
         bash \
@@ -16,10 +19,21 @@ RUN bun install --frozen-lockfile
 
 RUN bun run build:ssr
 
+RUN rm -rf vendor && \
+    php composer install --ignore-platform-reqs --no-dev
 
-FROM dunglas/frankenphp:php8.4-alpine
 
-RUN apk add --no-cache \
+# Strip down the base image
+FROM dunglas/frankenphp:php${PHP_VERSION}-alpine AS base
+
+RUN apk del \
+        curl
+
+
+#
+FROM base
+
+RUN apk add --no-cache --virtual .deps \
         git \
     && \
     install-php-extensions \
@@ -36,7 +50,8 @@ RUN apk add --no-cache \
     adduser -D -h /app -u 1001 -G bentobox bentobox && \
     chown -R bentobox:bentobox /data/caddy && \
     chown -R bentobox:bentobox /config/caddy && \
-    setcap -r /usr/local/bin/frankenphp;
+    setcap -r /usr/local/bin/frankenphp && \
+    apk del .deps
 
 USER bentobox
 
@@ -63,6 +78,6 @@ COPY ./docker/rootfs /
 
 VOLUME [ "/app/storage" ]
 
-EXPOSE 8000
+EXPOSE 1337
 
 CMD [ "/docker-entrypoint.sh" ]
