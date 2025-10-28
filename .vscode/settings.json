@@ -20,6 +20,11 @@
         "editor.formatOnSave": true,
     },
 
+    "commitlint.log.enabled": true,
+    "commitlint.config.file": "commitlint.config.ts",
+    "conventionalCommits.emojiFormat": "emoji",
+    "conventionalCommits.autoCommit": false,
+
     "i18n-ally.localesPaths": [
         "lang"
     ],
