@@ -17,8 +17,11 @@
         "ghcr.io/devcontainers-extra/features/act:1": {},
         "ghcr.io/eitsupi/devcontainer-features/jq-likes:2": {},
         "ghcr.io/michidk/devcontainers-features/bun:1": {},
-        "ghcr.io/actcoding/devcontainer-features/moonrepo:1": {},
-        "ghcr.io/actcoding/devcontainer-features/phpactor:1": {},
+        "ghcr.io/actcoding/devcontainer-features/frankenphp:1": {},
+        "ghcr.io/actcoding/devcontainer-features/git-delta:1": {},
+        "ghcr.io/actcoding/devcontainer-features/phpactor:1": {
+            "version": "2025.10.17.0"
+        },
         "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
     },
 
