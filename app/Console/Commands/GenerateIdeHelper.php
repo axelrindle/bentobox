@@ -23,8 +23,6 @@ class GenerateIdeHelper extends Command
 
     /**
      * {@inheritdoc}
-     *
-     * @return bool
      */
     #[Override]
     public function isHidden(): bool
