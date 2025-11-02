@@ -1,16 +1,27 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import { CogIcon, MapPinnedIcon } from 'lucide-vue-next'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Heading from '@/components/Heading.vue'
 import Select from '@/components/Select.vue'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { toUrl, urlIsActive } from '@/lib/utils'
-import { show } from '@/routes/warehouses'
+import { show } from '@/routes/inventory/warehouses'
 import { type NavItem } from '@/types'
 
+const props = defineProps<{
+    currentPlace?: any
+    places?: any
+}>()
+
 const selectedPlace = ref<any>(null)
+
+onMounted(() => {
+    if (props.currentPlace) {
+        selectedPlace.value = props.currentPlace.id
+    }
+})
 
 const sidebarNavItems: NavItem[] = [
     {
@@ -31,10 +42,7 @@ const currentPath = typeof window !== undefined ? window.location.pathname : ''
         <div class="border border-sidebar-border/70 w-full rounded-xl flex items-center justify-between p-2">
             <Select
                 v-model="selectedPlace"
-                :places="[
-                    { id: 1, name: 'Main Warehouse' },
-                    { id: 2, name: 'Secondary Warehouse' },
-                ]"
+                :options="places"
             />
             <div class="flex items-center space-x-2">
                 <Button
@@ -80,8 +88,8 @@ const currentPath = typeof window !== undefined ? window.location.pathname : ''
 
             <Separator class="my-6 lg:hidden" />
 
-            <div class="flex-1 md:max-w-2xl">
-                <section class="max-w-xl space-y-12">
+            <div class="flex-1">
+                <section class="space-y-12">
                     <slot />
                 </section>
             </div>
