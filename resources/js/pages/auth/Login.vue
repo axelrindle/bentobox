@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3'
 import { LoaderCircle } from 'lucide-vue-next'
+import { useLocalStorage } from '@vueuse/core'
 import InputError from '@/components/InputError.vue'
 import TextLink from '@/components/TextLink.vue'
 import { Button } from '@/components/ui/button'
@@ -11,11 +12,13 @@ import AuthBase from '@/layouts/AuthLayout.vue'
 import { store } from '@/routes/login'
 import { request } from '@/routes/password'
 import { login as oidcLogin } from '@/routes/oidc'
+import { Badge } from '@/components/ui/badge'
 
 defineProps<{
     status?: string;
     canResetPassword: boolean;
     canRegister: boolean;
+    usedOidc?: boolean;
 }>()
 </script>
 
@@ -93,30 +96,58 @@ defineProps<{
                     </Label>
                 </div>
 
-                <Button
-                    type="submit"
-                    class="mt-4 w-full"
-                    :tabindex="4"
-                    :disabled="processing"
-                    data-test="login-button"
-                >
-                    <LoaderCircle
-                        v-if="processing"
-                        class="h-4 w-4 animate-spin"
-                    />
-                    Log in
-                </Button>
+                <div class="relative mt-4">
+                    <Button
+                        type="submit"
+                        class="w-full"
+                        :tabindex="4"
+                        :disabled="processing"
+                        data-test="login-button"
+                        :variant="usedOidc ? 'outline' : 'default'"
+                    >
+                        <LoaderCircle
+                            v-if="processing"
+                            class="h-4 w-4 animate-spin"
+                        />
+                        <span>Log in</span>
+                    </Button>
+                    <Badge
+                        v-if="usedOidc === false"
+                        class="absolute -top-2 -right-2"
+                        variant="secondary"
+                    >
+                        Last used
+                    </Badge>
+                </div>
+            </div>
+
+            <div class="relative flex py-5 items-center">
+                <div class="flex-grow border-t border-gray-400" />
+                <span class="flex-shrink mx-4 text-gray-400 italic uppercase">or</span>
+                <div class="flex-grow border-t border-gray-400" />
             </div>
 
             <div
                 class="text-center text-sm text-muted-foreground"
             >
-                <TextLink
-                    :href="oidcLogin()"
-                    :tabindex="5"
-                >
-                    Login with OpenID Connect
-                </TextLink>
+                <div class="relative">
+                    <Button
+                        as="a"
+                        :variant="usedOidc ? 'default' : 'outline'"
+                        class="w-full"
+                        :tabindex="5"
+                        :href="oidcLogin.url()"
+                    >
+                        Login with OpenID Connect
+                    </Button>
+                    <Badge
+                        v-if="usedOidc === true"
+                        class="absolute -top-2 -right-2"
+                        variant="secondary"
+                    >
+                        Last used
+                    </Badge>
+                </div>
             </div>
         </Form>
     </AuthBase>
