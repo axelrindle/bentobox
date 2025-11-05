@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OpenIdConnectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -9,6 +10,11 @@ Route::get('/', function () {
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');
+
+Route::get('/login/oidc', [OpenIdConnectController::class, 'login'])
+    ->name('oidc.login');
+Route::get('/login/oidc/callback', [OpenIdConnectController::class, 'callback'])
+    ->name('oidc.callback');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

@@ -8,9 +8,9 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import AuthBase from '@/layouts/AuthLayout.vue'
-import { register } from '@/routes'
 import { store } from '@/routes/login'
 import { request } from '@/routes/password'
+import { login as oidcLogin } from '@/routes/oidc'
 
 defineProps<{
     status?: string;
@@ -109,15 +109,13 @@ defineProps<{
             </div>
 
             <div
-                v-if="canRegister"
                 class="text-center text-sm text-muted-foreground"
             >
-                Don't have an account?
                 <TextLink
-                    :href="register()"
+                    :href="oidcLogin()"
                     :tabindex="5"
                 >
-                    Sign up
+                    Login with OpenID Connect
                 </TextLink>
             </div>
         </Form>
