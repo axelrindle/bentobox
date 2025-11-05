@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import IdDrawerTrigger from './ui/id-drawer/IdDrawerTrigger.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import type { BreadcrumbItemType } from '@/types'
-import IdDrawerTrigger from './ui/id-drawer/IdDrawerTrigger.vue';
 
 withDefaults(
     defineProps<{
