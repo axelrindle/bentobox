@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Data;
+
+use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
+use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
+
+#[TypeScript]
+#[MapInputName(SnakeCaseMapper::class)]
+class WarehouseResource extends Data
+{
+    public function __construct(
+        public Uuid $id,
+        public Carbon $createdAt,
+        public Carbon $updatedAt,
+        public string $name,
+        public ?string $description,
+        public ?float $latitude,
+        public ?float $longitude,
+        public ?PlaceResource $place,
+    ) {}
+}

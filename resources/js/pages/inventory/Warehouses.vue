@@ -8,14 +8,15 @@ import { show } from '@/routes/two-factor'
 import { BreadcrumbItem } from '@/types'
 import Table from '@/components/ui/table/Table.vue'
 
-const columnHelper = createColumnHelper<any>()
+const columnHelper = createColumnHelper<App.Data.WarehouseResource>()
 
 const warehouseColumns = [
     columnHelper.accessor('name', {
         header: () => 'Name',
     }),
-    columnHelper.accessor('location', {
-        header: () => 'Location',
+    columnHelper.display({
+        header: 'Coordinates',
+        cell: ({ row: { original } }) => `${original.latitude}°N,-${original.longitude}°W`,
     }),
     columnHelper.accessor('description', {
         header: () => 'Description',
@@ -23,9 +24,9 @@ const warehouseColumns = [
 ]
 
 defineProps<{
-    places: any
-    currentPlace: any
-    warehouses: any
+    places: App.Data.PlaceResource[]
+    currentPlace: App.Data.PlaceResource
+    warehouses: App.Data.WarehouseResource[]
 }>()
 
 const breadcrumbs: BreadcrumbItem[] = [
