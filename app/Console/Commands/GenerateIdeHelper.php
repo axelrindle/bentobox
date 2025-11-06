@@ -39,7 +39,7 @@ class GenerateIdeHelper extends Command
             return;
         }
 
-        $this->call('ide-helper:generate');
+        // $this->call('ide-helper:generate');
         $this->call('ide-helper:models', ['-R', '-M']);
     }
 }

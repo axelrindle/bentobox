@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
 import Heading from '@/components/Heading.vue'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -10,6 +10,9 @@ import { show } from '@/routes/two-factor'
 import { edit as editPassword } from '@/routes/user-password'
 import { type NavItem } from '@/types'
 
+const page = usePage()
+const user = page.props.auth.user
+
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
@@ -18,10 +21,12 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Password',
         href: editPassword(),
+        isDisabled: user.isExternal,
     },
     {
         title: 'Two-Factor Auth',
         href: show(),
+        isDisabled: user.isExternal,
     },
     {
         title: 'Appearance',
@@ -48,6 +53,7 @@ const currentPath = typeof window !== undefined ? window.location.pathname : ''
                         variant="ghost"
                         :class="[
                             'w-full justify-start',
+                            { 'hidden': item.isDisabled },
                             { 'bg-muted': urlIsActive(item.href, currentPath) },
                         ]"
                         as-child
