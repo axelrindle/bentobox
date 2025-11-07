@@ -99,15 +99,15 @@ jobs:
       cancel-in-progress: true
       group: ${{ github.ref }}-docker-${{ matrix.runner }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - uses: ./.github/actions/docker
         id: docker
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ github.token }}
-
-      - name: Checkout repository
-        uses: actions/checkout@v5
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -143,6 +143,9 @@ jobs:
     needs:
       - docker-image
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - uses: ./.github/actions/docker
         id: docker
         with:
