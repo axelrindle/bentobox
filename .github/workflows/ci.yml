@@ -68,18 +68,26 @@ jobs:
       - name: Check code style (Php)
         run: ./composer run-script lint
 
-      - name: Check code style (Bun)
-        run: bun --bun run lint
-
       - name: Build
         run: bun --bun run build:ssr
+
+      - name: Check types (Bun)
+        run: bun --bun run typecheck
+
+      - name: Check code style (Bun)
+        run: bun --bun run lint
 
       - name: Run tests (Php)
         run: ./composer run-script test
 
   docker-image:
     name: Build Docker image
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runner:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
     needs:
       - test
     permissions:
