@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Support\Facades\Date;
+use Laravel\Fortify\Features;
 use Override;
 
 class PasswordConfirmation extends RequirePassword
@@ -18,6 +19,10 @@ class PasswordConfirmation extends RequirePassword
     #[Override]
     protected function shouldConfirmPassword($request, $passwordTimeoutSeconds = null)
     {
+        if (! Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')) {
+            return false;
+        }
+
         if ($request->user()?->is_external) {
             return false;
         }

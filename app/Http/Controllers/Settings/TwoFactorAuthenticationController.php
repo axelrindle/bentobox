@@ -19,12 +19,10 @@ class TwoFactorAuthenticationController extends Controller implements HasMiddlew
      */
     public static function middleware(): array
     {
-        $confirmEnabled = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword');
-
-        return array_filter([
+        return [
             new Middleware(RequireNoIdP::class),
-            $confirmEnabled => new Middleware([PasswordConfirmation::class], only: ['show']),
-        ]);
+            new Middleware([PasswordConfirmation::class], only: ['show']),
+        ];
     }
 
     /**
