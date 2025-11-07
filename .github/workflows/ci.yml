@@ -102,7 +102,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - uses: ./.github/actions/docker
+      - name: Setup Docker
+        uses: ./.github/actions/docker
         id: docker
         with:
           registry: ${{ env.REGISTRY }}
@@ -146,7 +147,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - uses: ./.github/actions/docker
+      - name: Setup Docker
+        uses: ./.github/actions/docker
         id: docker
         with:
           registry: ${{ env.REGISTRY }}
@@ -164,7 +166,7 @@ jobs:
         working-directory: ${{ runner.temp }}/digests
         run: |
           docker buildx imagetools create \
-            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "${{ steps.docker.outputs.meta_json }}") \
+            $(echo "${{ steps.docker.outputs.meta_json }}" | jq -cr '.tags | map("-t " + .) | join(" ")') \
             $(printf '${{ env.REGISTRY }}/${{ github.repository }}@sha256:%s ' *)
 
       - name: Inspect image
