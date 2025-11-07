@@ -97,7 +97,7 @@ jobs:
       id-token: write
     concurrency:
       cancel-in-progress: true
-      group: ${{ github.ref }}-docker
+      group: ${{ github.ref }}-docker-${{ matrix.runner }}
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
