@@ -103,11 +103,16 @@ class OIDC
         $idToken = $this->decode($response['id_token']);
 
         // TODO: Access Control
+        /** @var User */
         $user = User::whereEmail($accessToken['email'])->firstOrNew();
 
         $user->email = $accessToken['email'];
         $user->name = $accessToken['name'];
         $user->provider = 'openid-connect';
+
+        if (! $user->hasVerifiedEmail()) {
+            $user->email_verified_at = now();
+        }
 
         $user->save();
 
