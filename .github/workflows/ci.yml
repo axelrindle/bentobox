@@ -166,7 +166,7 @@ jobs:
         working-directory: ${{ runner.temp }}/digests
         run: |
           docker buildx imagetools create \
-            $(echo "${{ steps.docker.outputs.meta_json }}" | jq -cr '.tags | map("-t " + .) | join(" ")') \
+            $(echo '${{ steps.docker.outputs.meta_json }}' | jq -cr '.tags | map("-t " + .) | join(" ")') \
             $(printf '${{ env.REGISTRY }}/${{ github.repository }}@sha256:%s ' *)
 
       - name: Inspect image
