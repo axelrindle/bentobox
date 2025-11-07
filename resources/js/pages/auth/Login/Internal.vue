@@ -107,11 +107,12 @@ defineProps<{
             </div>
         </Form>
 
-        <section class="w-min mx-auto">
+        <section>
             <div class="relative">
                 <Button
                     as="a"
                     :variant="usedOidc ? 'default' : 'link'"
+                    class="w-full"
                     :href="oidc.login.url()"
                     :tabindex="5"
                 >
@@ -119,7 +120,7 @@ defineProps<{
                 </Button>
                 <Badge
                     v-if="usedOidc === true"
-                    class="absolute -top-2 -right-1/4"
+                    class="absolute -top-2 -right-2"
                     variant="secondary"
                 >
                     Last used

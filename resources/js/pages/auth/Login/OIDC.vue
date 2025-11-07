@@ -16,7 +16,7 @@ defineProps<{
 <template>
     <AuthBase
         title="Log in to your account"
-        description="Enter your email and password below to log in"
+        description="Choose a method to log in"
     >
         <Head title="Log in" />
 
@@ -31,7 +31,6 @@ defineProps<{
             <div class="relative">
                 <Button
                     as="a"
-                    :variant="usedOidc ? 'default' : 'outline'"
                     class="w-full"
                     :tabindex="5"
                     :href="oidc.login.url()"
@@ -58,7 +57,7 @@ defineProps<{
             <div class="relative">
                 <Button
                     as="a"
-                    :variant="usedOidc ? 'outline' : 'default'"
+                    variant="outline"
                     class="w-full"
                     :tabindex="5"
                     :href="login.email.url()"
