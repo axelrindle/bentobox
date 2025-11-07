@@ -20,7 +20,9 @@ class RequireNoIdP
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user()?->is_external) {
-            return redirect()->back();
+            return redirect()->back()->withErrors([
+                'form' => "You're authenticated through an Identity Provider and thus your profile remains read-only.",
+            ]);
         }
 
         return $next($request);
