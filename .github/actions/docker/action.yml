@@ -12,9 +12,15 @@ inputs:
     required: true
     description: container registry password
 outputs:
-  meta:
-    description: metadata
-    value: ${{ steps.meta.outputs }}
+  meta_json:
+    description: metadata json
+    value: ${{ steps.meta.outputs.json }}
+  meta_labels:
+    description: metadata labels
+    value: ${{ steps.meta.outputs.labels }}
+  meta_version:
+    description: metadata version
+    value: ${{ steps.meta.outputs.version }}
 runs:
   using: composite
   steps:

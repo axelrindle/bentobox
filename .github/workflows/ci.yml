@@ -116,7 +116,7 @@ jobs:
           context: .
           file: docker/Dockerfile
           tags: ${{ env.REGISTRY }}/${{ github.repository }}
-          labels: ${{ steps.docker.outputs.meta.labels }}
+          labels: ${{ steps.docker.outputs.meta_labels }}
           outputs: |
             type=image,push-by-digest=true,name-canonical=true,push=true
           push: ${{ github.event_name != 'pull_request' }}
@@ -164,10 +164,10 @@ jobs:
         working-directory: ${{ runner.temp }}/digests
         run: |
           docker buildx imagetools create \
-            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "${{ steps.docker.outputs.meta }}") \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "${{ steps.docker.outputs.meta_json }}") \
             $(printf '${{ env.REGISTRY }}/${{ github.repository }}@sha256:%s ' *)
 
       - name: Inspect image
         run: |
           docker buildx imagetools inspect \
-            ${{ env.REGISTRY }}/${{ github.repository }}:${{ steps.docker.outputs.meta.version }}
+            ${{ env.REGISTRY }}/${{ github.repository }}:${{ steps.docker.outputs.meta_version }}
