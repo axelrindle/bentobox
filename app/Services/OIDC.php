@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\BootException;
 use App\Models\User;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -11,19 +12,41 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Factory as ValidatorFactory;
+use Illuminate\Validation\ValidationException;
 use Ramsey\Uuid\Uuid;
 
 class OIDC
 {
+    /**
+     * Discovered OpenID Endpoint Configuration
+     *
+     * @var array<string,mixed>
+     */
     private array $discovery;
 
+    /**
+     * @param  array<string,mixed>  $config
+     */
     public function __construct(
         private array $config,
-        private UrlGenerator $url,
-        private ResponseFactory $response,
         private HttpFactory $http,
+        private ResponseFactory $response,
         private SessionManager $session,
+        private UrlGenerator $url,
+        private ValidatorFactory $validation,
     ) {
+        $validator = $validation->make($config, [
+            'discovery' => 'required|url',
+            'verify_certs' => 'required|boolean:strict',
+            'client_id' => 'required|string',
+            'client_secret' => 'required|string',
+            'scopes' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            throw new BootException('oidc discovery response validation failed', previous: new ValidationException($validator));
+        }
+
         $this->discover();
     }
 
@@ -36,9 +59,23 @@ class OIDC
 
     private function discover(): void
     {
-        $this->discovery = $this->http()->get($this->config['discovery'])
+        $discovery = $this->http()->get($this->config['discovery'])
             ->throw()
             ->json();
+
+        $validator = $this->validation->make($discovery, [
+            'issuer' => 'required|string',
+            'authorization_endpoint' => 'required|url',
+            'token_endpoint' => 'required|url',
+            'introspection_endpoint' => 'required|url',
+            'userinfo_endpoint' => 'required|url',
+            'end_session_endpoint' => 'required|url',
+        ]);
+        if ($validator->fails()) {
+            throw new BootException('oidc discovery response validation failed', previous: new ValidationException($validator));
+        }
+
+        $this->discovery = $discovery;
     }
 
     private function decode(string $jwt): array
@@ -81,7 +118,7 @@ class OIDC
 
         if ($stateFromSession != $stateFromUrl) {
             $this->session->invalidate();
-            abort(403, 'invalid state');
+            abort(406, 'invalid state');
         }
 
         $payload = [
@@ -101,6 +138,13 @@ class OIDC
         $accessToken = $this->decode($response['access_token']);
         $refreshToken = $this->decode($response['refresh_token']);
         $idToken = $this->decode($response['id_token']);
+
+        if ($accessToken['iss'] != $this->discovery['issuer']) {
+            $this->session->invalidate();
+            abort(406, sprintf('invalid issuer: expected issuer "%s" did not match incoming issuer "%s"',
+                $this->discovery['issuer'],
+                $accessToken['iss']));
+        }
 
         // TODO: Access Control
         /** @var User */
