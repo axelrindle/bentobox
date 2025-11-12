@@ -66,8 +66,9 @@
     "forwardPorts": [
         8000,
         5173,
-        "caddy:8443",
-        "db_admin:5433"
+        "db-admin:5433",
+        "auth:8080",
+        "caddy:8443"
     ],
     "portsAttributes": {
         "8000": {
@@ -80,15 +81,20 @@
             "onAutoForward": "silent",
             "protocol": "http"
         },
+        "db-admin:5433": {
+            "label": "pgadmin",
+            "onAutoForward": "silent",
+            "protocol": "http"
+        },
+        "auth:8080": {
+            "label": "Keycloak",
+            "onAutoForward": "silent",
+            "protocol": "http"
+        },
         "caddy:8443": {
             "label": "Secure Backend",
             "onAutoForward": "silent",
             "protocol": "https"
-        },
-        "db_admin:5433": {
-            "label": "pgadmin",
-            "onAutoForward": "silent",
-            "protocol": "http"
         }
     },
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\OIDC;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -41,6 +42,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
+                'isOidcEnabled' => app(OIDC::class)->isEnabled(),
                 'user' => $user?->toData(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',

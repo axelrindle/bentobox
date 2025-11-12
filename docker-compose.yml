@@ -10,7 +10,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
-  db_admin:
+  db-admin:
     image: dpage/pgadmin4:9
     depends_on:
       - db
@@ -28,6 +28,13 @@ services:
 
   redis:
     image: redis:8-alpine
+
+  auth:
+    image: quay.io/keycloak/keycloak:26.4.2
+    command: start-dev
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
 
 volumes:
   db_data:

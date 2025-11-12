@@ -92,6 +92,24 @@
             }
         },
         {
+            "label": "Auth",
+            "detail": "Local port-forwarding to the Keycloak container",
+            "type": "shell",
+            "command": "socat -d tcp-listen:8080,reuseaddr,fork tcp:auth:8080",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": "none",
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
             "label": "Dev",
             "detail": "Boots all components of the application",
             "problemMatcher": [],
@@ -100,7 +118,8 @@
                 "SSR",
                 "Frontend",
                 "Scheduler",
-                "Queue"
+                "Queue",
+                "Auth"
             ]
         },
 
