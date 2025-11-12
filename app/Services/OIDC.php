@@ -18,6 +18,8 @@ use Ramsey\Uuid\Uuid;
 
 class OIDC
 {
+    private bool $isEnabled = true;
+
     /**
      * Discovered OpenID Endpoint Configuration
      *
@@ -36,6 +38,12 @@ class OIDC
         private UrlGenerator $url,
         private ValidatorFactory $validation,
     ) {
+        if ($config['enabled'] !== true) {
+            $this->isEnabled = false;
+
+            return;
+        }
+
         $validator = $validation->make($config, [
             'discovery' => 'required|url',
             'verify_certs' => 'required|boolean:strict',
@@ -50,8 +58,17 @@ class OIDC
         $this->discover();
     }
 
+    private function ensureEnabled()
+    {
+        if (! $this->isEnabled) {
+            throw new BootException('oidc is not enabled');
+        }
+    }
+
     private function http(): PendingRequest
     {
+        $this->ensureEnabled();
+
         return $this->http->withOptions([
             'verify' => $this->config['verify_certs'],
         ]);
@@ -59,6 +76,8 @@ class OIDC
 
     private function discover(): void
     {
+        $this->ensureEnabled();
+
         $discovery = $this->http()->get($this->config['discovery'])
             ->throw()
             ->json();
@@ -85,8 +104,15 @@ class OIDC
         return json_decode(base64_decode($payload), true);
     }
 
+    public function isEnabled(): bool
+    {
+        return $this->isEnabled;
+    }
+
     public function redirectUrl(string $state): string
     {
+        $this->ensureEnabled();
+
         $query = [
             'response_type' => 'code',
             'client_id' => $this->config['client_id'],
@@ -100,6 +126,8 @@ class OIDC
 
     public function redirect(): RedirectResponse
     {
+        $this->ensureEnabled();
+
         $this->session->invalidate();
 
         $state = Uuid::uuid7();
@@ -113,6 +141,8 @@ class OIDC
 
     public function callback(Request $request): void
     {
+        $this->ensureEnabled();
+
         $stateFromSession = $this->session->get('oidc_session_state');
         $stateFromUrl = $request->query->getString('state');
 

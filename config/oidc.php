@@ -2,6 +2,8 @@
 
 return [
 
+    'enabled' => (bool) env('OIDC_ENABLED', false),
+
     /*
     |--------------------------------------------------------------------------
     | OpenID Endpoint Configuration

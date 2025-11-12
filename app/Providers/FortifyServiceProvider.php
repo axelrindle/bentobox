@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Http\Controllers\OpenIdConnectController;
+use App\Services\OIDC;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -49,12 +50,18 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureViews(): void
     {
-        Fortify::loginView(fn (Request $request) => Inertia::render('auth/Login/OIDC', [
-            'canResetPassword' => Features::enabled(Features::resetPasswords()),
-            'canRegister' => Features::enabled(Features::registration()),
-            'status' => $request->session()->get('status'),
-            'usedOidc' => $request->cookies->has(OpenIdConnectController::COOKIE_LAST_USED) ? $request->cookies->getBoolean(OpenIdConnectController::COOKIE_LAST_USED) : null,
-        ]));
+        Fortify::loginView(function (Request $request) {
+            if (! app(OIDC::class)->isEnabled()) {
+                return redirect()->route('login.email');
+            }
+
+            return Inertia::render('auth/Login/OIDC', [
+                'canResetPassword' => Features::enabled(Features::resetPasswords()),
+                'canRegister' => Features::enabled(Features::registration()),
+                'status' => $request->session()->get('status'),
+                'usedOidc' => $request->cookies->has(OpenIdConnectController::COOKIE_LAST_USED) ? $request->cookies->getBoolean(OpenIdConnectController::COOKIE_LAST_USED) : null,
+            ]);
+        });
 
         Fortify::resetPasswordView(fn (Request $request) => Inertia::render('auth/ResetPassword', [
             'email' => $request->email,
@@ -68,8 +75,6 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::verifyEmailView(fn (Request $request) => Inertia::render('auth/VerifyEmail', [
             'status' => $request->session()->get('status'),
         ]));
-
-        Fortify::registerView(fn () => Inertia::render('auth/Register'));
 
         Fortify::twoFactorChallengeView(fn () => Inertia::render('auth/TwoFactorChallenge'));
 

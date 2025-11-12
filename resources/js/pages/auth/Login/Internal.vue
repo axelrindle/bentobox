@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3'
+import { Form, Head, usePage } from '@inertiajs/vue3'
 import InputError from '@/components/InputError.vue'
 import TextLink from '@/components/TextLink.vue'
 import { Badge } from '@/components/ui/badge'
@@ -17,6 +17,8 @@ defineProps<{
     canResetPassword: boolean;
     usedOidc?: boolean;
 }>()
+
+const page = usePage()
 </script>
 
 <template>
@@ -107,7 +109,7 @@ defineProps<{
             </div>
         </Form>
 
-        <section>
+        <section v-if="page.props.auth.isOidcEnabled">
             <div class="relative">
                 <Button
                     as="a"
