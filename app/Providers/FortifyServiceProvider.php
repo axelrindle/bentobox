@@ -55,7 +55,7 @@ class FortifyServiceProvider extends ServiceProvider
                 return redirect()->route('login.email');
             }
 
-            return Inertia::render('auth/Login/OIDC', [
+            return Inertia::render('auth/OpenIdConnectLogin', [
                 'canResetPassword' => Features::enabled(Features::resetPasswords()),
                 'canRegister' => Features::enabled(Features::registration()),
                 'status' => $request->session()->get('status'),

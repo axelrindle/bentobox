@@ -13,7 +13,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/login/email', function (Request $request) {
-    return Inertia::render('auth/Login/Internal', [
+    return Inertia::render('auth/EmailLogin', [
         'usedOidc' => $request->cookies->has(OpenIdConnectController::COOKIE_LAST_USED) ? $request->cookies->getBoolean(OpenIdConnectController::COOKIE_LAST_USED) : null,
     ]);
 })->middleware(['guest'])->name('login.email');
