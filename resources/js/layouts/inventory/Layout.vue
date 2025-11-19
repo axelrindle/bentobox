@@ -2,10 +2,10 @@
 import { Link } from '@inertiajs/vue3'
 import { CogIcon, MapPinnedIcon } from 'lucide-vue-next'
 import { computed, onMounted, ref } from 'vue'
-import Heading from '@/components/Heading.vue'
 import Select from '@/components/Select.vue'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useCurrentPath } from '@/composables/useCurrentPath'
 import { toUrl, urlIsActive } from '@/lib/utils'
 import { show } from '@/routes/inventory/warehouses'
 import { type NavItem } from '@/types'
@@ -15,11 +15,11 @@ const props = defineProps<{
     places?: App.Data.PlaceResource[]
 }>()
 
-const selectedPlace = ref<any>(null)
+const selectedPlace = ref<App.Data.PlaceResource|null>(null)
 
 onMounted(() => {
     if (props.currentPlace) {
-        selectedPlace.value = props.currentPlace.id
+        selectedPlace.value = props.currentPlace
     }
 })
 
@@ -34,7 +34,7 @@ const sidebarNavItems: NavItem[] = [
     },
 ]
 
-const currentPath = typeof window !== undefined ? window.location.pathname : ''
+const currentPath = useCurrentPath()
 
 const placeOptions = computed(() => props.places?.map(p => ({ id: p.id, label: p.name })) ?? [])
 </script>

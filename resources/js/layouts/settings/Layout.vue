@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/vue3'
 import Heading from '@/components/Heading.vue'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useCurrentPath } from '@/composables/useCurrentPath'
 import { toUrl, urlIsActive } from '@/lib/utils'
 import { edit as editAppearance } from '@/routes/appearance'
 import { edit as editProfile } from '@/routes/profile'
@@ -34,7 +35,7 @@ const sidebarNavItems: NavItem[] = [
     },
 ]
 
-const currentPath = typeof window !== undefined ? window.location.pathname : ''
+const currentPath = useCurrentPath()
 </script>
 
 <template>
