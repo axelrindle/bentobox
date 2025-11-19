@@ -61,11 +61,6 @@ jobs:
       - name: Install dependencies (Php)
         run: ./composer install
 
-      - name: Generate key
-        run: |
-          echo APP_KEY=\"$(./artisan key:generate --show)\" | tee -a .env.testing > /dev/null
-          ./artisan config:cache
-
       - name: Migrate
         run: ./artisan migrate --force
 
