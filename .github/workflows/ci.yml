@@ -61,7 +61,6 @@ jobs:
 
       - name: Generate key
         run: |
-          cp .env.testing .env
           echo APP_KEY=\"$(./artisan key:generate --show)\" | tee -a .env > /dev/null
           ./artisan config:cache
 

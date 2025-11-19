@@ -25,6 +25,10 @@
         "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
     },
 
+    "containerEnv": {
+        "APP_ENV": "local"
+    },
+
     "customizations": {
         "vscode": {
             "extensions": [
