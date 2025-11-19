@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants;
 use App\Http\Controllers\OpenIdConnectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +15,7 @@ Route::get('/', function () {
 
 Route::get('/login/email', function (Request $request) {
     return Inertia::render('auth/EmailLogin', [
-        'usedOidc' => $request->cookies->has(OpenIdConnectController::COOKIE_LAST_USED) ? $request->cookies->getBoolean(OpenIdConnectController::COOKIE_LAST_USED) : null,
+        'usedOidc' => $request->cookies->has(Constants::COOKIE_LAST_USED) ? $request->cookies->getBoolean(Constants::COOKIE_LAST_USED) : null,
     ]);
 })->middleware(['guest'])->name('login.email');
 

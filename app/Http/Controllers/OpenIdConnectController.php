@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants;
 use App\Http\Middleware\RequireOidcEnabled;
 use App\Services\OIDC;
 use Illuminate\Http\RedirectResponse;
@@ -11,8 +12,6 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class OpenIdConnectController extends Controller implements HasMiddleware
 {
-    public const COOKIE_LAST_USED = 'usedOidc';
-
     public static function middleware()
     {
         return [
@@ -22,7 +21,7 @@ class OpenIdConnectController extends Controller implements HasMiddleware
 
     public function login(Request $request, OIDC $oidc): RedirectResponse
     {
-        return $oidc->redirect()->withCookie(self::COOKIE_LAST_USED, true);
+        return $oidc->redirect()->withCookie(Constants::COOKIE_LAST_USED, true);
     }
 
     public function callback(Request $request, OIDC $oidc): RedirectResponse

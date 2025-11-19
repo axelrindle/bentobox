@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
-use App\Http\Controllers\OpenIdConnectController;
+use App\Constants;
 use App\Services\OIDC;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -59,7 +59,7 @@ class FortifyServiceProvider extends ServiceProvider
                 'canResetPassword' => Features::enabled(Features::resetPasswords()),
                 'canRegister' => Features::enabled(Features::registration()),
                 'status' => $request->session()->get('status'),
-                'usedOidc' => $request->cookies->has(OpenIdConnectController::COOKIE_LAST_USED) ? $request->cookies->getBoolean(OpenIdConnectController::COOKIE_LAST_USED) : null,
+                'usedOidc' => $request->cookies->has(Constants::COOKIE_LAST_USED) ? $request->cookies->getBoolean(Constants::COOKIE_LAST_USED) : null,
             ]);
         });
 
@@ -101,7 +101,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
                 return redirect()->route('dashboard')
-                    ->withCookie(OpenIdConnectController::COOKIE_LAST_USED, false);
+                    ->withCookie(Constants::COOKIE_LAST_USED, false);
             }
         });
     }
