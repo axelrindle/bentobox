@@ -1,32 +1,27 @@
 <?php
 
-use App\Constants;
-use App\Http\Controllers\OpenIdConnectController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\OpenIdConnectController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');
+Route::prefix('/login')->group(function () {
+    Route::get('/email', LoginController::class)
+        ->middleware(['guest'])
+        ->name('login.email');
 
-Route::get('/login/email', function (Request $request) {
-    return Inertia::render('auth/EmailLogin', [
-        'usedOidc' => $request->cookies->has(Constants::COOKIE_LAST_USED) ? $request->cookies->getBoolean(Constants::COOKIE_LAST_USED) : null,
-    ]);
-})->middleware(['guest'])->name('login.email');
+    // middleware defined in OpenIdConnectController
+    Route::get('/oidc', [OpenIdConnectController::class, 'login'])
+        ->name('oidc.login');
+    Route::get('/oidc/callback', [OpenIdConnectController::class, 'callback'])
+        ->name('oidc.callback');
+});
 
-Route::get('/login/oidc', [OpenIdConnectController::class, 'login'])
-    ->name('oidc.login');
-Route::get('/login/oidc/callback', [OpenIdConnectController::class, 'callback'])
-    ->name('oidc.callback');
-
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::redirect('/', '/dashboard')
+    ->name('home');
+Route::get('/dashboard', DashboardController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/inventory.php';

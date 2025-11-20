@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Constants;
+use App\Http\Controllers\Controller;
 use App\Http\Middleware\RequireOidcEnabled;
 use App\Services\OIDC;
 use Illuminate\Http\RedirectResponse;

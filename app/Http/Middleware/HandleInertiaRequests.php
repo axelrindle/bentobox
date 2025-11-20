@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Services\OIDC;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Laravel\Fortify\Features;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -42,8 +43,10 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'isOidcEnabled' => app(OIDC::class)->isEnabled(),
                 'user' => $user?->toData(),
+                'isOidcEnabled' => app(OIDC::class)->isEnabled(),
+                'canResetPassword' => Features::enabled(Features::resetPasswords()),
+                'canRegister' => Features::enabled(Features::registration()),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
