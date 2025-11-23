@@ -20,7 +20,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <Drawer>
+    <Drawer direction="top">
         <DrawerTrigger as-child>
             <Button
                 data-sidebar="trigger"
@@ -33,7 +33,7 @@ const props = defineProps<{
                 <span class="sr-only">Show Login-ID Code</span>
             </Button>
         </DrawerTrigger>
-        <DrawerContent>
+        <DrawerContent direction="top">
             <DrawerHeader>
                 <DrawerTitle>Are you absolutely sure?</DrawerTitle>
                 <DrawerDescription>
