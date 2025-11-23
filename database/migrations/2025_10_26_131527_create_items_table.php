@@ -24,7 +24,7 @@ return new class extends Migration
 
             $table->foreignIdFor(Warehouse::class)
                 ->references('id')
-                ->on('places')
+                ->on('warehouses')
                 ->restrictOnUpdate()
                 ->cascadeOnDelete();
         });
