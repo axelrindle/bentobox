@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         Place::factory()
             ->has(
                 Warehouse::factory()
-                    ->has(Item::factory()->count(10), 'items')
+                    ->has(Item::factory()->count(10000), 'items')
                     ->count(2),
                 'warehouses'
             )

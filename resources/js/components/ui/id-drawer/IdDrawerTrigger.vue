@@ -34,16 +34,16 @@ const props = defineProps<{
             </Button>
         </DrawerTrigger>
         <DrawerContent direction="top">
-            <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+            <DrawerHeader class="text-left">
+                <DrawerTitle>Your Login-ID Code</DrawerTitle>
                 <DrawerDescription>
-                    This action cannot be undone.
+                    Present this code to a BentoBox terminal to log in.
                 </DrawerDescription>
             </DrawerHeader>
             <DrawerFooter>
                 <Button>Submit</Button>
                 <DrawerClose>
-                    <Button variant="outline"> Cancel </Button>
+                    <Button variant="outline" class="w-full"> Cancel </Button>
                 </DrawerClose>
             </DrawerFooter>
         </DrawerContent>

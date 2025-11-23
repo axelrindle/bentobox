@@ -25,7 +25,7 @@ withDefaults(
                     <Breadcrumbs :breadcrumbs="breadcrumbs" />
                 </template>
             </div>
-            <IdDrawerTrigger class="-mr-1 lg:hidden" />
+            <IdDrawerTrigger class="-mr-1 md:hidden" />
         </div>
     </header>
 </template>
