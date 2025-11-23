@@ -6,20 +6,18 @@ import { useCurrentPath } from '@/composables/useCurrentPath'
 import { toUrl, urlIsActive } from '@/lib/utils'
 import { type NavItem } from '@/types'
 import { SidebarGroupLabel } from '@/components/ui/sidebar'
+import { showSingleWarehouse } from '@/routes/inventory/warehouses'
+import Heading from '@/components/Heading.vue'
 
 const props = defineProps<{
-    currentPlace?: App.Data.PlaceResource
-    currentWarehouse?: App.Data.WarehouseResource
+    currentPlace: App.Data.PlaceResource
+    currentWarehouse: App.Data.WarehouseResource
 }>()
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'All Items',
-        href: '#',
-    },
-    {
-        title: 'All Items',
-        href: '#',
+        href: showSingleWarehouse({ warehouse: props.currentWarehouse!, place: props.currentPlace! }),
     },
 ]
 
@@ -28,10 +26,13 @@ const currentPath = useCurrentPath()
 
 <template>
     <div class="p-4 space-y-4">
+        <Heading
+            :title="currentWarehouse.name"
+        />
         <div class="flex flex-col lg:flex-row lg:space-x-12">
             <aside class="w-full max-w-xl lg:w-48">
                 <nav class="flex flex-col space-y-1 space-x-0">
-                    <SidebarGroupLabel>Inventory</SidebarGroupLabel>
+                    <SidebarGroupLabel>Warehouse</SidebarGroupLabel>
                     <Button
                         v-for="item in sidebarNavItems"
                         :key="toUrl(item.href)"

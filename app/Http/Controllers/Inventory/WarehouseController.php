@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Inventory;
 use App\Http\Controllers\Controller;
 use App\Models\Place;
 use App\Models\Warehouse;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -46,9 +47,14 @@ class WarehouseController extends Controller
             abort(404, 'Warehouse does not belong to the specified Place');
         }
 
+        $items = Item::query()
+            ->where('warehouse_id', $warehouse->id)
+            ->get();
+
         return Inertia::render('inventory/WarehouseDetails', [
             'currentPlace' => $place,
             'currentWarehouse' => $warehouse,
+            'items' => $items,
         ]);
     }
 }
