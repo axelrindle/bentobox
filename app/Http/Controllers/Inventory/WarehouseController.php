@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Inventory;
 
 use App\Data\ItemResource;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaginationRequest;
+use App\Models\Item;
 use App\Models\Place;
 use App\Models\Warehouse;
-use App\Models\Item;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -38,9 +39,9 @@ class WarehouseController extends Controller
         ]);
     }
 
-    public function showSingleWarehouse(Request $request, ?Place $place = null, ?Warehouse $warehouse = null): Response
+    public function showSingleWarehouse(PaginationRequest $request, ?Place $place = null, ?Warehouse $warehouse = null): Response
     {
-        if (!$place || !$warehouse) {
+        if (! $place || ! $warehouse) {
             abort(404, 'Place or Warehouse not found');
         }
 
@@ -48,9 +49,14 @@ class WarehouseController extends Controller
             abort(404, 'Warehouse does not belong to the specified Place');
         }
 
+        $request->validated();
+
         $items = Item::query()
             ->where('warehouse_id', $warehouse->id)
-            ->paginate(15);
+            ->paginate(
+                perPage: $request->query('per_page', 15),
+                page: $request->query('page', 1)
+            );
 
         return Inertia::render('inventory/WarehouseDetails', [
             'currentPlace' => $place->toData(),

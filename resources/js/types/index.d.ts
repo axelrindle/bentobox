@@ -39,3 +39,9 @@ export type PaginatedResource<T> = {
     to: number;
     total: number;
 }
+
+export type PaginationParams = {
+    per_page?: number
+    page?: number
+    // query?: string
+}

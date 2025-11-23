@@ -8,7 +8,7 @@ import Table from '@/components/ui/table/Table.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import InventoryLayout from '@/layouts/inventory/Layout.vue'
 import { show } from '@/routes/two-factor'
-import { BreadcrumbItem } from '@/types'
+import { BreadcrumbItem, PaginationParams } from '@/types'
 import { showSingleWarehouse } from '@/routes/inventory/warehouses'
 
 const columnHelper = createColumnHelper<App.Data.WarehouseResource>()
@@ -28,8 +28,10 @@ const warehouseColumns = [
         id: 'actions',
         cell: ({ row: { original } }) => (
             <Button class="float-right" asChild>
-                {/* TODO: replace with warehouse detail link */}
-                <Link href={showSingleWarehouse({ place: props.currentPlace.id, warehouse: original.id })}>
+                <Link href={showSingleWarehouse(
+                    { place: props.currentPlace.id, warehouse: original.id },
+                    { query: { page: 1, per_page: 5 } satisfies PaginationParams },
+                )}>
                     <span>View</span>
                     <ArrowRight class="size-4" />
                 </Link>
