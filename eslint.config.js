@@ -11,7 +11,17 @@ export default [
     },
     {
         name: 'app/ignores',
-        ignores: ['vendor', 'node_modules', 'public', 'bootstrap/ssr', 'tailwind.config.js', 'resources/js/components/ui/*'],
+        ignores: [
+            'vendor',
+            'node_modules',
+            'public',
+            'bootstrap/ssr',
+            'tailwind.config.js',
+            'resources/js/actions/*',
+            'resources/js/routes/*',
+            'resources/js/wayfinder/*',
+            'resources/js/components/ui/*',
+        ],
     },
     ...configActDefault,
     ...configVue.configs['flat/recommended'],

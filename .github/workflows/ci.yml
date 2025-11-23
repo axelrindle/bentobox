@@ -24,6 +24,8 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
+    env:
+      APP_ENV: testing
     steps:
       - uses: actions/checkout@v5
 
@@ -59,20 +61,20 @@ jobs:
       - name: Install dependencies (Php)
         run: ./composer install
 
-      - name: Generate key
-        run: |
-          cp .env.testing .env
-          echo APP_KEY=\"$(./artisan key:generate --show)\" | tee -a .env > /dev/null
-          ./artisan config:cache
+      - name: Migrate
+        run: ./artisan migrate --force
 
       - name: Check code style (Php)
         run: ./composer run-script lint
 
-      - name: Check code style (Bun)
-        run: bun --bun run lint
-
       - name: Build
         run: bun --bun run build:ssr
+
+      - name: Check types (Bun)
+        run: bun --bun run typecheck
+
+      - name: Check code style (Bun)
+        run: bun --bun run lint
 
       - name: Run tests (Php)
         run: ./composer run-script test

@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3'
-import { LoaderCircle } from 'lucide-vue-next'
+import { Form, Head, usePage } from '@inertiajs/vue3'
 import InputError from '@/components/InputError.vue'
 import TextLink from '@/components/TextLink.vue'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import AuthBase from '@/layouts/AuthLayout.vue'
-import { register } from '@/routes'
 import { store } from '@/routes/login'
+import oidc from '@/routes/oidc'
 import { request } from '@/routes/password'
 
 defineProps<{
     status?: string;
     canResetPassword: boolean;
-    canRegister: boolean;
+    usedOidc?: boolean;
 }>()
+
+const page = usePage()
 </script>
 
 <template>
@@ -96,30 +98,36 @@ defineProps<{
                 <Button
                     type="submit"
                     class="mt-4 w-full"
+                    :variant="usedOidc ? 'outline' : 'default'"
                     :tabindex="4"
                     :disabled="processing"
                     data-test="login-button"
                 >
-                    <LoaderCircle
-                        v-if="processing"
-                        class="h-4 w-4 animate-spin"
-                    />
+                    <Spinner v-if="processing" />
                     Log in
                 </Button>
             </div>
+        </Form>
 
-            <div
-                v-if="canRegister"
-                class="text-center text-sm text-muted-foreground"
-            >
-                Don't have an account?
-                <TextLink
-                    :href="register()"
+        <section v-if="page.props.auth.isOidcEnabled">
+            <div class="relative">
+                <Button
+                    as="a"
+                    :variant="usedOidc ? 'default' : 'link'"
+                    class="w-full"
+                    :href="oidc.login.url()"
                     :tabindex="5"
                 >
-                    Sign up
-                </TextLink>
+                    Use OpenID Connect instead
+                </Button>
+                <Badge
+                    v-if="usedOidc === true"
+                    class="absolute -top-2 -right-2"
+                    variant="secondary"
+                >
+                    Last used
+                </Badge>
             </div>
-        </Form>
+        </section>
     </AuthBase>
 </template>

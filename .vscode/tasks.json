@@ -14,24 +14,9 @@
             },
             "group": "none",
             "options": {
-                "statusbar": {
-                    "hide": true
-                }
-            }
-        },
-        {
-            "label": "SSR",
-            "command": "php artisan inertia:start-ssr --runtime bun",
-            "type": "shell",
-            "args": [],
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "silent",
-                "focus": false,
-                "panel": "dedicated"
-            },
-            "group": "none",
-            "options": {
+                "env": {
+                    "APP_ENV": "local"
+                },
                 "statusbar": {
                     "hide": true
                 }
@@ -68,6 +53,9 @@
             },
             "group": "none",
             "options": {
+                "env": {
+                    "APP_ENV": "local"
+                },
                 "statusbar": {
                     "hide": true
                 }
@@ -78,6 +66,27 @@
             "detail": "Boots the Laravel Queue worker",
             "type": "shell",
             "command": "php artisan queue:work",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": "none",
+            "options": {
+                "env": {
+                    "APP_ENV": "local"
+                },
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "Auth",
+            "detail": "Local port-forwarding to the Keycloak container",
+            "type": "shell",
+            "command": "socat -d tcp-listen:8080,reuseaddr,fork tcp:auth:8080",
             "problemMatcher": [],
             "presentation": {
                 "reveal": "silent",
@@ -97,13 +106,12 @@
             "problemMatcher": [],
             "dependsOn": [
                 "Laravel",
-                "SSR",
                 "Frontend",
                 "Scheduler",
-                "Queue"
+                "Queue",
+                "Auth"
             ]
         },
-
         {
             "label": "Migrate",
             "detail": "Run database migrations",
@@ -115,6 +123,11 @@
                 "reveal": "always",
                 "panel": "shared",
             },
+            "options": {
+                "env": {
+                    "APP_ENV": "local"
+                },
+            }
         },
         {
             "label": "Reset database",
@@ -128,6 +141,11 @@
                 "panel": "shared",
                 "focus": true,
             },
+            "options": {
+                "env": {
+                    "APP_ENV": "local"
+                },
+            }
         },
         {
             "label": "Clear Cache",
@@ -140,6 +158,37 @@
                 "reveal": "silent",
                 "panel": "shared",
             },
+            "options": {
+                "env": {
+                    "APP_ENV": "local"
+                },
+            }
+        },
+        {
+            "label": "Test",
+            "command": "composer run-script test",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "options": {
+                "env": {
+                    "APP_ENV": "testing"
+                },
+                "statusbar": {
+                    "icon": {
+                        "id": "test-view-icon"
+                    }
+                }
+            }
         },
     ]
 }

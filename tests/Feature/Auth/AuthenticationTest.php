@@ -5,9 +5,15 @@ use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
 
 test('login screen can be rendered', function () {
-    $response = $this->get(route('login'));
+    $response = $this->get(route('login.email'));
 
     $response->assertStatus(200);
+});
+
+test('login screen redirects to email when oidc is disabled', function () {
+    $response = $this->get(route('login'));
+
+    $response->assertStatus(302);
 });
 
 test('users can authenticate using the login screen', function () {

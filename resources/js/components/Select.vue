@@ -13,13 +13,16 @@ const model = defineModel({
     type: [String, Number, Object],
 })
 
-interface SelectProps {
-    options?: any;
+type Option = {
+    id: string | number
+    label: string
 }
 
-withDefaults(defineProps<SelectProps>(), {
-    options: [],
-})
+interface SelectProps {
+    options: Option[];
+}
+
+defineProps<SelectProps>()
 </script>
 
 <template>
@@ -36,7 +39,7 @@ withDefaults(defineProps<SelectProps>(), {
                         :key="option.id"
                         :value="option.id"
                     >
-                        {{ option.name }}
+                        {{ option.label }}
                     </SelectItem>
                 </SelectGroup>
             </SelectContent>

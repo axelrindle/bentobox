@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Override;
 
-class GenerateIdeHelper extends Command
+class GenerateIdeHelperCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -39,7 +39,7 @@ class GenerateIdeHelper extends Command
             return;
         }
 
-        $this->call('ide-helper:generate');
+        // $this->call('ide-helper:generate');
         $this->call('ide-helper:models', ['-R', '-M']);
     }
 }

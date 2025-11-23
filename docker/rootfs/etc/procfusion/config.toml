@@ -1,0 +1,7 @@
+[processes.laravel]
+command = "frankenphp run -c /etc/frankenphp/Caddyfile"
+directory = "/app"
+
+[processes.ssr]
+command = "php artisan inertia:start-ssr --runtime=bun"
+directory = "/app"

@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/AppLayout.vue'
 import InventoryLayout from '@/layouts/inventory/Layout.vue'
 import { BreadcrumbItem } from '@/types'
-import { show } from '@/routes/warehouses'
+import { show } from '@/routes/inventory/warehouses'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

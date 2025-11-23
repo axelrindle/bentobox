@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { Form, Head, Link, usePage } from '@inertiajs/vue3'
+import { KeyIcon } from 'lucide-vue-next'
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController'
-import { edit } from '@/routes/profile'
-import { send } from '@/routes/verification'
-
 import DeleteUser from '@/components/DeleteUser.vue'
 import HeadingSmall from '@/components/HeadingSmall.vue'
 import InputError from '@/components/InputError.vue'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import AppLayout from '@/layouts/AppLayout.vue'
 import SettingsLayout from '@/layouts/settings/Layout.vue'
+import { edit } from '@/routes/profile'
+import { send } from '@/routes/verification'
 import { type BreadcrumbItem } from '@/types'
 
 interface Props {
@@ -43,6 +44,16 @@ const user = page.props.auth.user
                     description="Update your name and email address"
                 />
 
+                <Alert
+                    v-if="user.isExternal"
+                    variant="info"
+                >
+                    <KeyIcon class="size-4" />
+                    <AlertDescription>
+                        You're authenticated through an Identity Provider and thus your profile remains read-only.
+                    </AlertDescription>
+                </Alert>
+
                 <Form
                     v-slot="{ errors, processing, recentlySuccessful }"
                     v-bind="ProfileController.update.form()"
@@ -58,6 +69,7 @@ const user = page.props.auth.user
                             required
                             autocomplete="name"
                             placeholder="Full name"
+                            :disabled="user.isExternal"
                         />
                         <InputError
                             class="mt-2"
@@ -76,6 +88,7 @@ const user = page.props.auth.user
                             required
                             autocomplete="username"
                             placeholder="Email address"
+                            :disabled="user.isExternal"
                         />
                         <InputError
                             class="mt-2"
@@ -83,7 +96,7 @@ const user = page.props.auth.user
                         />
                     </div>
 
-                    <div v-if="mustVerifyEmail && !user.email_verified_at">
+                    <div v-if="mustVerifyEmail && !user.emailVerifiedAt">
                         <p class="-mt-4 text-sm text-muted-foreground">
                             Your email address is unverified.
                             <Link
@@ -106,11 +119,15 @@ const user = page.props.auth.user
 
                     <div class="flex items-center gap-4">
                         <Button
-                            :disabled="processing"
+                            :disabled="user.isExternal || processing"
                             data-test="update-profile-button"
                         >
                             Save
                         </Button>
+                        <InputError
+                            class="mt-2"
+                            :message="errors.form"
+                        />
 
                         <Transition
                             enter-active-class="transition ease-in-out"
@@ -129,7 +146,7 @@ const user = page.props.auth.user
                 </Form>
             </div>
 
-            <DeleteUser />
+            <DeleteUser v-if="!user.isExternal" />
         </SettingsLayout>
     </AppLayout>
 </template>

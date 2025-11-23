@@ -1,0 +1,94 @@
+name: bentobox-prod
+
+services:
+  db:
+    image: postgres:18-alpine
+    env_file:
+      - db.env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - infra
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  cache:
+    image: redis:8-alpine
+    networks:
+      - infra
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  migrator:
+    image: ghcr.io/axelrindle/bentobox
+    command: php artisan migrate --force
+    env_file:
+      - app.env
+    depends_on:
+      - db
+      - cache
+    networks:
+      - infra
+    restart: on-failure:3
+
+  backend:
+    image: ghcr.io/axelrindle/bentobox
+    command:
+    env_file:
+      - app.env
+    ports:
+      - 1337:1337
+    depends_on:
+      - db
+      - cache
+      - migrator
+    networks:
+      - infra
+      - app
+    healthcheck:
+      disable: true
+
+  scheduler:
+    image: ghcr.io/axelrindle/bentobox
+    command: php artisan schedule:work
+    env_file:
+      - app.env
+    depends_on:
+      - db
+      - cache
+      - migrator
+    networks:
+      - infra
+    healthcheck:
+      disable: true
+
+  queue:
+    image: ghcr.io/axelrindle/bentobox
+    command: php artisan queue:work
+    env_file:
+      - app.env
+    depends_on:
+      - db
+      - cache
+      - migrator
+    networks:
+      - infra
+    healthcheck:
+      disable: true
+    scale: 2
+
+volumes:
+  db_data:
+  backend_data:
+
+networks:
+  infra:
+  app:

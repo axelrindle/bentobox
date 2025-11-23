@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3'
-import { dashboard, login, register } from '@/routes'
 import AppLogoIcon from '@/components/AppLogoIcon.vue'
 import { Button } from '@/components/ui/button'
+import { dashboard, login } from '@/routes'
 
 withDefaults(
     defineProps<{
@@ -29,7 +29,7 @@ withDefaults(
             </Button>
             <template v-else>
                 <Button>
-                     <Link
+                    <Link
                         :href="login()"
                     >
                         Log in

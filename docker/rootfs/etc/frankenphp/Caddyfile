@@ -1,6 +1,10 @@
 {
 	skip_install_trust
 
+	servers {
+    	enable_full_duplex
+  	}
+
 	frankenphp
 }
 
