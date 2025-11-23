@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
-import { BookOpen, Folder, LayoutGrid, Boxes } from 'lucide-vue-next'
+import { BookOpen, Folder, LayoutGrid, Boxes, MessageCircleQuestion } from 'lucide-vue-next'
 import AppLogo from './AppLogo.vue'
 import NavFooter from '@/components/NavFooter.vue'
 import NavMain from '@/components/NavMain.vue'
@@ -33,14 +33,19 @@ const mainNavItems: NavItem[] = [
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Github Repo',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
-    },
-    {
         title: 'Documentation',
         href: 'https://laravel.com/docs/starter-kits#vue',
         icon: BookOpen,
+    },
+     {
+        title: 'Support',
+        href: 'https://laravel.com/docs/starter-kits#vue',
+        icon: MessageCircleQuestion,
+    },
+    {
+        title: 'GitHub Repository',
+        href: 'https://github.com/axelrindle/bentobox',
+        icon: Folder,
     },
 ]
 </script>

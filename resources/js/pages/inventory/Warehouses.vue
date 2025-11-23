@@ -6,8 +6,13 @@ import InventoryLayout from '@/layouts/inventory/Layout.vue'
 import { show } from '@/routes/two-factor'
 import { BreadcrumbItem } from '@/types'
 import Table from '@/components/ui/table/Table.vue'
+import { Button } from '@/components/ui/button'
 
 import { createColumnHelper } from '@tanstack/vue-table'
+
+import { h } from 'vue'
+
+import { ArrowRight } from 'lucide-vue-next'
 
 const columnHelper = createColumnHelper<any>()
 
@@ -20,6 +25,28 @@ const warehouseColumns = [
     }),
     columnHelper.accessor('description', {
         header: () => 'Description',
+    }),
+     columnHelper.accessor('button', {
+        header: () => '',
+        cell: () =>
+            h(
+                Button,
+                {
+                    class: 'float-right',
+                },
+                [
+                    h(
+                        'span',
+                        'View'
+                    ),
+                     h(
+                        ArrowRight,
+                        {
+                            class: 'size-4',
+                        }
+                    ),
+                ]
+            ),
     }),
 ]
 
