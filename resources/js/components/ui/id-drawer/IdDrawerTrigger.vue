@@ -66,14 +66,14 @@ watch(open, async (newVal) => {
             </Button>
         </DrawerTrigger>
         <DrawerContent direction="top">
-            <DrawerHeader class="text-left">
+            <DrawerHeader>
                 <DrawerTitle>Your Login-ID Code</DrawerTitle>
                 <DrawerDescription>
                     Present this code to a BentoBox terminal to log in.
                 </DrawerDescription>
             </DrawerHeader>
 
-            <div class="flex items-center justify-center my-6">
+            <div class="flex items-center justify-center my-4">
                 <div ref="canvas" class="border rounded-3xl size-44 flex items-center justify-center overflow-hidden"></div>
             </div>
 
