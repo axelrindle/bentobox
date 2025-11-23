@@ -1,52 +1,40 @@
-<script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+<script setup lang="tsx">
+import { Head, Link } from '@inertiajs/vue3'
 import { createColumnHelper } from '@tanstack/vue-table'
+import { ArrowRight } from 'lucide-vue-next'
 import HeadingSmall from '@/components/HeadingSmall.vue'
+import { Button } from '@/components/ui/button'
+import Table from '@/components/ui/table/Table.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import InventoryLayout from '@/layouts/inventory/Layout.vue'
 import { show } from '@/routes/two-factor'
 import { BreadcrumbItem } from '@/types'
-import Table from '@/components/ui/table/Table.vue'
-import { Button } from '@/components/ui/button'
-
-import { h } from 'vue'
-
-import { ArrowRight } from 'lucide-vue-next'
+import { showWithPlaceId } from '@/routes/inventory/warehouses'
 
 const columnHelper = createColumnHelper<App.Data.WarehouseResource>()
 
 const warehouseColumns = [
     columnHelper.accessor('name', {
-        header: () => 'Name',
+        header: 'Name',
     }),
     columnHelper.display({
         header: 'Coordinates',
         cell: ({ row: { original } }) => `${original.latitude}°N,-${original.longitude}°W`,
     }),
     columnHelper.accessor('description', {
-        header: () => 'Description',
+        header:  'Description',
     }),
-     columnHelper.accessor('button', {
-        header: () => '',
-        cell: () =>
-            h(
-                Button,
-                {
-                    class: 'float-right',
-                },
-                [
-                    h(
-                        'span',
-                        'View'
-                    ),
-                     h(
-                        ArrowRight,
-                        {
-                            class: 'size-4',
-                        }
-                    ),
-                ]
-            ),
+    columnHelper.display({
+        id: 'actions',
+        cell: () => (
+            <Button class="float-right" asChild>
+                {/* TODO: replace with warehouse detail link */}
+                <Link href={showWithPlaceId({ placeId: 1 })}>
+                    <span>View</span>
+                    <ArrowRight class="size-4" />
+                </Link>
+            </Button>
+        ),
     }),
 ]
 

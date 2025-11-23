@@ -11,6 +11,10 @@
         ],
 
         "verbatimModuleSyntax": false,
+        "jsx": "preserve",
+        "jsxImportSource": "vue",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "Fragment"
     },
     "include": [
         "resources/js/**/*.d.ts",
