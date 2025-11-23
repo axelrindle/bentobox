@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory;
 
 use App\Http\Controllers\Controller;
 use App\Models\Place;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -13,7 +14,7 @@ class WarehouseController extends Controller
     /**
      * Show the inventory warehouses page.
      */
-    public function show(Request $request, ?string $placeId = null): Response
+    public function showOverview(Request $request, ?string $placeId = null): Response
     {
         $places = Place::all();
         $currentPlace = null;
@@ -28,10 +29,26 @@ class WarehouseController extends Controller
 
         $warehouses = $currentPlace ? Place::find($currentPlace->id)->warehouses : [];
 
-        return Inertia::render('inventory/Warehouses', [
+        return Inertia::render('inventory/WarehousesOverview', [
             'places' => $places,
             'currentPlace' => $currentPlace,
             'warehouses' => $warehouses,
+        ]);
+    }
+
+    public function showSingleWarehouse(Request $request, ?Place $place = null, ?Warehouse $warehouse = null): Response
+    {
+        if (!$place || !$warehouse) {
+            abort(404, 'Place or Warehouse not found');
+        }
+
+        if ($warehouse->place_id !== $place->id) {
+            abort(404, 'Warehouse does not belong to the specified Place');
+        }
+
+        return Inertia::render('inventory/WarehouseDetails', [
+            'currentPlace' => $place,
+            'currentWarehouse' => $warehouse,
         ]);
     }
 }
