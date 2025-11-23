@@ -9,17 +9,45 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 
+import { router } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
+
 const props = defineProps<{
     data: Array<Record<string, any>>;
     columns: Array<any>;
     total?: number;
     itemsPerPage?: number;
+    dataName?: string;
 }>();
+
+const currentPage = ref(
+    window.location.search
+        ? parseInt(
+              new URLSearchParams(window.location.search).get("page") || "1",
+          )
+        : 1,
+);
 
 const table = useVueTable({
     data: props.data,
     columns: props.columns,
     getCoreRowModel: getCoreRowModel(),
+});
+
+const requestOptions = () => {
+    const options: Record<string, any> = {
+        preserveScroll: true,
+    };
+    if (props.dataName) {
+        options["only"] = [props.dataName];
+    }
+    return options;
+};
+
+watch(currentPage, (newPage) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", newPage.toString());
+    router.get(url.toString(), undefined, requestOptions());
 });
 </script>
 
@@ -71,6 +99,7 @@ const table = useVueTable({
                 {{ props.total ?? props.data.length }} items
             </div>
             <Pagination
+                v-model:page="currentPage"
                 v-if="total && itemsPerPage"
                 v-slot="{ page }"
                 :items-per-page="itemsPerPage"

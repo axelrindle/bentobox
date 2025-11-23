@@ -3,15 +3,17 @@ import { Head } from '@inertiajs/vue3'
 import { createColumnHelper } from '@tanstack/vue-table'
 import { Link } from '@inertiajs/vue3'
 import { ArrowRight } from 'lucide-vue-next'
+import { router } from '@inertiajs/vue3'
 import AppLayout from '@/layouts/AppLayout.vue'
 import WarehouseLayout from '@/layouts/warehouse/Layout.vue'
 import { BreadcrumbItem } from '@/types'
 import { showOverview } from '@/routes/inventory/warehouses'
+import { showSingleWarehouse } from '@/routes/inventory/warehouses'
 import HeadingSmall from '@/components/HeadingSmall.vue'
 import Input from '@/components/ui/input/Input.vue'
 import Table from '@/components/ui/table/Table.vue'
 import { Button } from '@/components/ui/button'
-import type { PaginatedResource } from '@/types'
+import type { PaginatedResource, PaginationParams } from '@/types'
 
 import WarehouseDetailsProperties from '@/components/WarehouseDetailsProperties.vue'
 
@@ -96,6 +98,7 @@ const itemsColumns = [
                 </div>
 
                 <Table
+                    data-name="items"
                     :data="items.data"
                     :columns="itemsColumns"
                     :total="items.total"

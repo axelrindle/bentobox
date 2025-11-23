@@ -19,19 +19,30 @@ const warehouseColumns = [
     }),
     columnHelper.display({
         header: 'Coordinates',
-        cell: ({ row: { original } }) => `${original.latitude}°N,-${original.longitude}°W`,
+        cell: ({ row: { original } }) =>
+            `${original.latitude}°N,-${original.longitude}°W`,
     }),
     columnHelper.accessor('description', {
-        header:  'Description',
+        header: 'Description',
     }),
     columnHelper.display({
         id: 'actions',
         cell: ({ row: { original } }) => (
             <Button class="float-right" asChild>
-                <Link href={showSingleWarehouse(
-                    { place: props.currentPlace.id, warehouse: original.id },
-                    { query: { page: 1, per_page: 5 } satisfies PaginationParams },
-                )}>
+                <Link
+                    href={showSingleWarehouse(
+                        {
+                            place: props.currentPlace.id,
+                            warehouse: original.id,
+                        },
+                        {
+                            query: {
+                                page: 1,
+                                per_page: 15,
+                            } satisfies PaginationParams,
+                        },
+                    )}
+                >
                     <span>View</span>
                     <ArrowRight class="size-4" />
                 </Link>
@@ -41,9 +52,9 @@ const warehouseColumns = [
 ]
 
 const props = defineProps<{
-    places: App.Data.PlaceResource[]
-    currentPlace: App.Data.PlaceResource
-    warehouses: App.Data.WarehouseResource[]
+    places: App.Data.PlaceResource[];
+    currentPlace: App.Data.PlaceResource;
+    warehouses: App.Data.WarehouseResource[];
 }>()
 
 const breadcrumbs: BreadcrumbItem[] = [
