@@ -9,7 +9,6 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import InventoryLayout from '@/layouts/inventory/Layout.vue'
 import { show } from '@/routes/two-factor'
 import { BreadcrumbItem } from '@/types'
-import { showWithPlaceId } from '@/routes/inventory/warehouses'
 
 const columnHelper = createColumnHelper<App.Data.WarehouseResource>()
 
