@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Inventory;
 
+use App\Data\ItemResource;
 use App\Http\Controllers\Controller;
 use App\Models\Place;
 use App\Models\Warehouse;
@@ -49,12 +50,12 @@ class WarehouseController extends Controller
 
         $items = Item::query()
             ->where('warehouse_id', $warehouse->id)
-            ->get();
+            ->paginate(15);
 
         return Inertia::render('inventory/WarehouseDetails', [
-            'currentPlace' => $place,
-            'currentWarehouse' => $warehouse,
-            'items' => $items,
+            'currentPlace' => $place->toData(),
+            'currentWarehouse' => $warehouse->toData(),
+            'items' => ItemResource::collect($items),
         ]);
     }
 }

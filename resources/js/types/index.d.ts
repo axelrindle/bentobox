@@ -29,3 +29,13 @@ export type AppPageProps<
 }
 
 export type BreadcrumbItemType = BreadcrumbItem
+
+export type PaginatedResource<T> = {
+    data: T[];
+    current_page: number;
+    from: number;
+    last_page: number;
+    per_page: number;
+    to: number;
+    total: number;
+}

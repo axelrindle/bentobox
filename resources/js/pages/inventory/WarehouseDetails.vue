@@ -11,14 +11,17 @@ import HeadingSmall from '@/components/HeadingSmall.vue'
 import Input from '@/components/ui/input/Input.vue'
 import Table from '@/components/ui/table/Table.vue'
 import { Button } from '@/components/ui/button'
+import type { PaginatedResource } from '@/types'
 
 const columnHelper = createColumnHelper<App.Data.ItemResource>()
 
 const props = defineProps<{
     currentPlace: App.Data.PlaceResource
     currentWarehouse: App.Data.WarehouseResource
-    items: App.Data.ItemResource[]
+    items: PaginatedResource<App.Data.ItemResource>
 }>()
+
+console.log(props.items.data)
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -100,7 +103,7 @@ const itemsColumns = [
                 </div>
 
                 <Table
-                    :data="items"
+                    :data="items.data"
                     :columns="itemsColumns"
                 />
             </div>
