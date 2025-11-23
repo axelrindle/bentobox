@@ -21,7 +21,10 @@ class ItemFactory extends Factory
             'is_consumable' => $this->faker->boolean(0.3),
             'is_lendable' => $this->faker->boolean(0.8),
             'amount' => $this->faker->numberBetween(1, 50),
-            'tags' => $this->faker->word(),
+            'tags' => array_map(
+                fn () => $this->faker->word(),
+                array_fill(0, max(1, $this->faker->randomDigit()), ''),
+            ),
         ];
     }
 }
