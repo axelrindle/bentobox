@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Item;
 use App\Models\Place;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Warehouse;
 use Illuminate\Database\Seeder;
 
 use function Laravel\Prompts\confirm;
@@ -25,7 +27,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Place::factory()
-            ->hasWarehouses(2)
+            ->has(
+                Warehouse::factory()
+                    ->has(Item::factory()->count(10), 'items')
+                    ->count(2),
+                'warehouses'
+            )
             ->create();
     }
 

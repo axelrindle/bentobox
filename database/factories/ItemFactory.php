@@ -18,7 +18,8 @@ class ItemFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'can_lend' => $this->faker->boolean(0.8),
+            'is_consumable' => $this->faker->boolean(0.3),
+            'is_lendable' => $this->faker->boolean(0.8),
             'amount' => $this->faker->numberBetween(1, 50),
             'tags' => $this->faker->word(),
         ];
