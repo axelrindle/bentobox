@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::table('items', function (Blueprint $table) {
             $table->foreignIdFor(Item::class, 'parent_id')
+                ->nullable()
                 ->references('id')
                 ->on('items')
                 ->restrictOnUpdate()
