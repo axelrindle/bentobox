@@ -29,7 +29,7 @@ class WarehouseController extends Controller
 
         $warehouses = $currentPlace ? Place::find($currentPlace->id)->warehouses : [];
 
-        return Inertia::render('inventory/WarehousesOverview', [
+        return Inertia::render('inventory/WarehouseOverview', [
             'places' => $places,
             'currentPlace' => $currentPlace,
             'warehouses' => $warehouses,

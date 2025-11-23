@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { useCurrentPath } from '@/composables/useCurrentPath'
 import { toUrl, urlIsActive } from '@/lib/utils'
-import { show } from '@/routes/inventory/warehouses'
+import { showOverview } from '@/routes/inventory/warehouses'
 import { type NavItem } from '@/types'
 import { SidebarGroupLabel } from '@/components/ui/sidebar'
 
@@ -27,7 +27,7 @@ onMounted(() => {
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Warehouses',
-        href: show(),
+        href: showOverview(),
     },
     {
         title: 'All Items',

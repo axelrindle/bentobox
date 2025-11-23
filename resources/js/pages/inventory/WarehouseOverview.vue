@@ -28,7 +28,7 @@ const warehouseColumns = [
         cell: () => (
             <Button class="float-right" asChild>
                 {/* TODO: replace with warehouse detail link */}
-                <Link href={showWithPlaceId({ placeId: 1 })}>
+                <Link href="1">
                     <span>View</span>
                     <ArrowRight class="size-4" />
                 </Link>

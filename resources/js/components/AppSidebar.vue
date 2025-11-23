@@ -15,7 +15,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { dashboard } from '@/routes'
-import { show } from '@/routes/inventory/warehouses'
+import { showOverview } from '@/routes/inventory/warehouses'
 import { type NavItem } from '@/types'
 
 const mainNavItems: NavItem[] = [
@@ -26,7 +26,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Inventory',
-        href: show(),
+        href: showOverview(),
         icon: Boxes,
     },
 ]
