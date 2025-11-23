@@ -16,11 +16,11 @@ const props = defineProps<{
     places?: App.Data.PlaceResource[]
 }>()
 
-const selectedPlace = ref<App.Data.PlaceResource|null>(null)
+const selectedPlace = ref<string|null>(null)
 
 onMounted(() => {
     if (props.currentPlace) {
-        selectedPlace.value = props.currentPlace
+        selectedPlace.value = props.currentPlace.id
     }
 })
 

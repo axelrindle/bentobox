@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/vue3'
 import { createColumnHelper } from '@tanstack/vue-table'
 import { Link } from '@inertiajs/vue3'
-import { ArrowRight, Candy, HandCoins, SlashIcon } from 'lucide-vue-next'
+import { ArrowRight } from 'lucide-vue-next'
 import AppLayout from '@/layouts/AppLayout.vue'
 import WarehouseLayout from '@/layouts/warehouse/Layout.vue'
 import { BreadcrumbItem } from '@/types'
@@ -13,15 +13,15 @@ import Table from '@/components/ui/table/Table.vue'
 import { Button } from '@/components/ui/button'
 import type { PaginatedResource } from '@/types'
 
+import WarehouseDetailsProperties from '@/components/WarehouseDetailsProperties.vue'
+
 const columnHelper = createColumnHelper<App.Data.ItemResource>()
 
 const props = defineProps<{
-    currentPlace: App.Data.PlaceResource
-    currentWarehouse: App.Data.WarehouseResource
-    items: PaginatedResource<App.Data.ItemResource>
+    currentPlace: App.Data.PlaceResource;
+    currentWarehouse: App.Data.WarehouseResource;
+    items: PaginatedResource<App.Data.ItemResource>;
 }>()
-
-console.log(props.items.data)
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -52,19 +52,12 @@ const itemsColumns = [
         header: 'Properties',
         cell: ({ row: { original } }) => {
             return (
-                <div class="flex items-center gap-2">
-                    { original.isLendable ? (
-                        <div class="relative">
-                            <HandCoins class="size-4 text-muted-foreground" />
-                        </div>
-                    ): null }
-
-                    { original.isConsumable ? (
-                        <div class="relative">
-                            <Candy class="size-4 text-muted-foreground" />
-                        </div>
-                    ) : null }
-                </div>
+                <WarehouseDetailsProperties
+                    properties={{
+                        isLendable: original.isLendable,
+                        isConsumable: original.isConsumable,
+                    }}
+                />
             )
         },
     }),
@@ -105,6 +98,8 @@ const itemsColumns = [
                 <Table
                     :data="items.data"
                     :columns="itemsColumns"
+                    :total="items.total"
+                    :items-per-page="items.per_page"
                 />
             </div>
         </WarehouseLayout>
