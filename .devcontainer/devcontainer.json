@@ -58,7 +58,8 @@
                 "YoavBls.pretty-ts-errors",
                 "qwtel.sqlite-viewer",
                 "vivaxy.vscode-conventional-commits",
-                "Vue.volar"
+                "Vue.volar",
+                "esbenp.prettier-vscode"
             ],
             "settings": {
                 "phpactor.executablePath": "/usr/local/bin/php",
