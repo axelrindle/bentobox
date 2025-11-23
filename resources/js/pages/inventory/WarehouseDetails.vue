@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/vue3'
 import { createColumnHelper } from '@tanstack/vue-table'
 import { Link } from '@inertiajs/vue3'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, Candy, HandCoins, SlashIcon } from 'lucide-vue-next'
 import AppLayout from '@/layouts/AppLayout.vue'
 import WarehouseLayout from '@/layouts/warehouse/Layout.vue'
 import { BreadcrumbItem } from '@/types'
@@ -48,7 +48,21 @@ const itemsColumns = [
     columnHelper.display({
         header: 'Properties',
         cell: ({ row: { original } }) => {
+            return (
+                <div class="flex items-center gap-2">
+                    { original.isLendable ? (
+                        <div class="relative">
+                            <HandCoins class="size-4 text-muted-foreground" />
+                        </div>
+                    ): null }
 
+                    { original.isConsumable ? (
+                        <div class="relative">
+                            <Candy class="size-4 text-muted-foreground" />
+                        </div>
+                    ) : null }
+                </div>
+            )
         },
     }),
     columnHelper.display({
