@@ -9,6 +9,7 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import InventoryLayout from '@/layouts/inventory/Layout.vue'
 import { show } from '@/routes/two-factor'
 import { BreadcrumbItem } from '@/types'
+import { showSingleWarehouse } from '@/routes/inventory/warehouses'
 
 const columnHelper = createColumnHelper<App.Data.WarehouseResource>()
 
@@ -25,10 +26,10 @@ const warehouseColumns = [
     }),
     columnHelper.display({
         id: 'actions',
-        cell: () => (
+        cell: ({ row: { original } }) => (
             <Button class="float-right" asChild>
                 {/* TODO: replace with warehouse detail link */}
-                <Link href="1">
+                <Link href={showSingleWarehouse({ place: props.currentPlace.id, warehouse: original.id })}>
                     <span>View</span>
                     <ArrowRight class="size-4" />
                 </Link>
@@ -37,7 +38,7 @@ const warehouseColumns = [
     }),
 ]
 
-defineProps<{
+const props = defineProps<{
     places: App.Data.PlaceResource[]
     currentPlace: App.Data.PlaceResource
     warehouses: App.Data.WarehouseResource[]
