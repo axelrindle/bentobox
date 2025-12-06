@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\OpenIdConnectController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImportController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/login')->group(function () {
@@ -25,3 +26,7 @@ Route::get('/dashboard', DashboardController::class)
 
 require __DIR__.'/settings.php';
 require __DIR__.'/inventory.php';
+
+Route::prefix('/import')->group(function () {
+    Route::post('/inventory', [ImportController::class, 'importExcelSheet']);
+})->middleware('api');
