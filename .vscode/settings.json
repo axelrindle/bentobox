@@ -1,7 +1,28 @@
 {
     "explorer.autoRevealExclude": {
         "**/node_modules": true,
-        "**/vendor": true
+        "**/vendor": true,
+        "resources/js/actions": true,
+        "resources/js/routes": true,
+        "resources/js/wayfinder": true,
+    },
+
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+    "explorer.fileNesting.patterns": {
+        ".env.local": ".env.*",
+        "package.json": "bun.lock, components.json, *.js, *.mjs, *.ts, tsconfig.json",
+        "composer.json": "composer.lock, phpunit.xml, pint.json",
+        "docker-compose.yml": ".dockerignore, .actrc",
+        "README.md": "LICENSE",
+        ".gitignore": ".gitattributes"
+    },
+
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#e30613",
+        "titleBar.activeForeground": "#ffed00",
+        "statusBarItem.remoteBackground": "#e30613",
+        "statusBarItem.remoteForeground": "#ffed00"
     },
 
     "eslint.format.enable": true,
@@ -29,16 +50,24 @@
 
     "editor.defaultFormatter": null,
     "editor.linkedEditing": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
-    },
 
     "typescript.preferences.quoteStyle": "single",
     "typescript.format.semicolons": "remove",
     "typescript.preferences.importModuleSpecifierEnding": "js",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
     "[typescript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint",
         "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        },
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        },
     },
 
     "commitlint.log.enabled": true,
@@ -52,4 +81,5 @@
     "conventionalCommits.scopes": [
         "devcontainer"
     ],
+    "vue.inlayHints.missingProps": true,
 }
