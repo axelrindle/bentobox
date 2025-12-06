@@ -37,7 +37,7 @@ const footerNavItems: NavItem[] = [
         href: 'https://laravel.com/docs/starter-kits#vue',
         icon: BookOpen,
     },
-     {
+    {
         title: 'Support',
         href: 'https://laravel.com/docs/starter-kits#vue',
         icon: MessageCircleQuestion,

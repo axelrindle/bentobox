@@ -38,6 +38,31 @@ const form = useForm({
     }, {} as Record<string, any>),
     onSubmit: props.onSubmit,
 })
+
+const getComponentForFieldType = (type: Field['type']) => {
+    switch (type) {
+        case 'text':
+            return Input
+        case 'email':
+            return Input
+        case 'password':
+            return Input
+        case 'number':
+            return Input
+        case 'url':
+            return Input
+        case 'tel':
+            return Input
+        case 'date':
+            return Input
+        case 'time':
+            return Input
+        case 'color':
+            return Input
+        default:
+            return Input
+    }
+}
 </script>
 
 <template>
@@ -56,7 +81,9 @@ const form = useForm({
                         >
                             {{ inputField.label }}
                         </Label>
-                        <Input
+                        <component
+                            :is="getComponentForFieldType(inputField.type)"
+                            :type="inputField.type"
                             :value="field.state.value"
                             :name="field.name"
                             @blur="field.handleBlur"
